@@ -10,7 +10,8 @@
     "import",
     "promise",
     "compat",
-    "react"
+    "react",
+    "react-native"
   ],
   "ecmaFeatures": {
     "jsx": true,

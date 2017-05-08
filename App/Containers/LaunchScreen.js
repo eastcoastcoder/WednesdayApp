@@ -1,44 +1,36 @@
 import React from 'react';
 import { ScrollView, Text, Image, View } from 'react-native';
-import DevscreensButton from '../../ignite/DevScreens/DevscreensButton';
-// import ListviewGridExample from './ListviewGridExample.js'
-
 import { Images } from '../Themes';
-
-// Styles
+import DevscreensButton from '../../ignite/DevScreens/DevscreensButton';
 import styles from './Styles/LaunchScreenStyles';
+
+import API from '../Services/Api';
 
 export default class LaunchScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      counter: 1,
       data: [],
       isLoading: true,
-      isWednesday: new Date().getDay() === 0
+      fakeIsWednesday: true
       // isWednesday: new Date().getDay() === 3
     };
 
-    // setInterval(() => {
-    //   this.setState({ counter: this.state.counter + 1 });
-    // }, 1000);
+    this.getData();
   }
 
-  componentWillMount() {
-    const token = '...';
-    fetch(`https://graph.facebook.com/v2.9/1726444857365752/photos?fields=images&access_token=${token}`)
-    .then((response) => response.json())
-    .then((body) =>
+  getData = async () => {
+    const api = API.create();
+    const froggos = await api.getFrogAlbumPhotos();
     this.setState({
-      isLoading: false,
-      data: body
-    }))
-    .catch(err => console.tron.log(err));
+      data: froggos.data,
+      isLoading: false
+    });
   }
 
   render() {
-    if (!this.state.isWednesday) {
+    if (!this.state.fakeIsWednesday) {
       return (
         <View style={styles.mainContainer}>
           <Image source={Images.background} style={styles.backgroundImage} resizeMode="stretch" />
@@ -66,15 +58,15 @@ export default class LaunchScreen extends React.Component {
         </View>
       );
     }
+
     const results = this.state.data.data;
-    const dude = results[(Math.random() * results.length | 0)];
-    console.tron.log(dude);
+    const randomDude = results[(Math.random() * results.length | 0)];
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode="stretch" />
         <ScrollView style={styles.container}>
           <View style={styles.centered}>
-            <Image source={{ uri: dude.images[0].source }} style={styles.dude} />
+            <Image source={{ uri: randomDude.images[0].source }} style={styles.dude} />
           </View>
 
           <View style={styles.section} >
@@ -83,7 +75,6 @@ export default class LaunchScreen extends React.Component {
             </Text>
           </View>
 
-          {/* <ListviewGridExample />*/}
           <DevscreensButton />
         </ScrollView>
       </View>

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "node node_modules/.bin/eslint .",    
+    "lint": "node node_modules/.bin/eslint .",
     "fixcode": "eslint --fix *.js",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "clean:android": "cd android/ && ./gradlew clean && cd .. && react-native run-android",
@@ -55,6 +55,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "^6.8.0",
+    "eslint-plugin-react-native": "^2.3.2",
     "ignite-animatable": "^0.3.1",
     "ignite-dev-screens": "^2.0.0-beta.9",
     "ignite-ir-boilerplate-2016": "^0.2.2",
