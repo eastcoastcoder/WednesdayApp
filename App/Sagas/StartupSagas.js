@@ -8,6 +8,7 @@ export const selectAvatar = (state) => state.github.avatar
 // process STARTUP actions
 export function * startup (action) {
   if (__DEV__ && console.tron) {
+    /* Logging Info
     // straight-up string logging
     console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
 
@@ -31,6 +32,7 @@ export function * startup (action) {
         someNormalFunction: selectAvatar
       }
     })
+    */
   }
   const avatar = yield select(selectAvatar)
   // only get if we don't have it yet
