@@ -1,4 +1,4 @@
-import { Colors, Metrics, Fonts } from '../../Themes/'
+import { Colors, Metrics, Fonts } from '../../Themes/';
 
 export default {
   container: {
@@ -38,4 +38,4 @@ export default {
     justifyContent: 'flex-start',
     flexDirection: 'row'
   }
-}
+};

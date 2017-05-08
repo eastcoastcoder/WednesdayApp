@@ -1,5 +1,5 @@
 // a library to wrap and simplify api calls
-import apisauce from 'apisauce'
+import apisauce from 'apisauce';
 
 // our "constructor"
 const create = (baseURL = 'https://api.github.com/') => {
@@ -18,13 +18,13 @@ const create = (baseURL = 'https://api.github.com/') => {
     },
     // 10 second timeout...
     timeout: 10000
-  })
+  });
 
   // Wrap api's addMonitor to allow the calling code to attach
   // additional monitors in the future.  But only in __DEV__ and only
   // if we've attached Reactotron to console (it isn't during unit tests).
   if (__DEV__ && console.tron) {
-    api.addMonitor(console.tron.apisauce)
+    api.addMonitor(console.tron.apisauce);
   }
 
   // ------
@@ -41,9 +41,9 @@ const create = (baseURL = 'https://api.github.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getRoot = () => api.get('')
-  const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getRoot = () => api.get('');
+  const getRate = () => api.get('rate_limit');
+  const getUser = (username) => api.get('search/users', { q: username });
 
   // ------
   // STEP 3
@@ -62,10 +62,10 @@ const create = (baseURL = 'https://api.github.com/') => {
     getRoot,
     getRate,
     getUser
-  }
-}
+  };
+};
 
 // let's return back our create method as the default.
 export default {
   create
-}
+};

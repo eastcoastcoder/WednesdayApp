@@ -1,5 +1,5 @@
-import immutablePersistenceTransform from '../Services/ImmutablePersistenceTransform'
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native';
+import immutablePersistenceTransform from '../Services/ImmutablePersistenceTransform';
 
 const REDUX_PERSIST = {
   active: true,
@@ -11,6 +11,6 @@ const REDUX_PERSIST = {
     // persistence. An empty array means 'don't store any reducers' -> infinitered/ignite#409
     transforms: [immutablePersistenceTransform]
   }
-}
+};
 
-export default REDUX_PERSIST
+export default REDUX_PERSIST;

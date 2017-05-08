@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Fonts, Colors, Metrics } from '../../Themes/'
+import { StyleSheet } from 'react-native';
+import { Fonts, Colors, Metrics } from '../../Themes/';
 
 export default StyleSheet.create({
   button: {
@@ -17,4 +17,4 @@ export default StyleSheet.create({
     fontSize: Fonts.size.medium,
     marginVertical: Metrics.baseMargin
   }
-})
+});

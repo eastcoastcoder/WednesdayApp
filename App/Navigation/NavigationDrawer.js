@@ -1,25 +1,26 @@
-import React, { PropTypes, Component } from 'react'
-import Drawer from 'react-native-drawer'
-import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
-import DrawerContent from '../Containers/DrawerContent'
-import { connect } from 'react-redux'
-import Styles from './Styles/NavigationDrawerStyles'
+import React, { PropTypes, Component } from 'react';
+import Drawer from 'react-native-drawer';
+import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+
+import DrawerContent from '../Containers/DrawerContent';
+import Styles from './Styles/NavigationDrawerStyles';
 
 /* *******************
 * Documentation: https://github.com/root-two/react-native-drawer
 ********************/
 
 class NavigationDrawer extends Component {
-  render () {
-    const state = this.props.navigationState
-    const children = state.children
+  render() {
+    const state = this.props.navigationState;
+    const children = state.children;
     return (
       <Drawer
-        ref='navigation'
-        type='displace'
+        ref="navigation"
+        type="displace"
         open={state.open}
-        onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
-        onClose={() => NavigationActions.refresh({key: state.key, open: false})}
+        onOpen={() => NavigationActions.refresh({ key: state.key, open: true })}
+        onClose={() => NavigationActions.refresh({ key: state.key, open: false })}
         content={<DrawerContent />}
         styles={Styles}
         tapToClose
@@ -32,22 +33,18 @@ class NavigationDrawer extends Component {
       >
         <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
       </Drawer>
-    )
+    );
   }
 }
 
 NavigationDrawer.propTypes = {
   navigationState: PropTypes.object
-}
+};
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
+const mapStateToProps = (state) => ({
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer)
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer);

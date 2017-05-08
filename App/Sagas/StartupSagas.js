@@ -1,12 +1,12 @@
-import { put, select } from 'redux-saga/effects'
-import GithubActions from '../Redux/GithubRedux'
-import { is } from 'ramda'
+import { is } from 'ramda';
+import { put, select } from 'redux-saga/effects';
+import GithubActions from '../Redux/GithubRedux';
 
 // exported to make available for tests
-export const selectAvatar = (state) => state.github.avatar
+export const selectAvatar = (state) => state.github.avatar;
 
 // process STARTUP actions
-export function * startup (action) {
+export function * startup(action) {
   if (__DEV__ && console.tron) {
     /* Logging Info
     // straight-up string logging
@@ -34,9 +34,9 @@ export function * startup (action) {
     })
     */
   }
-  const avatar = yield select(selectAvatar)
+  const avatar = yield select(selectAvatar);
   // only get if we don't have it yet
   if (!is(String, avatar)) {
-    yield put(GithubActions.userRequest('GantMan'))
+    yield put(GithubActions.userRequest('GantMan'));
   }
 }
