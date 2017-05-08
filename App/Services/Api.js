@@ -3,7 +3,6 @@ import apisauce from 'apisauce';
 
 // our "constructor"
 const create = (baseURL = 'https://graph.facebook.com/v2.9/') => {
-
   const api = apisauce.create({
     baseURL,
     headers: {
@@ -17,7 +16,9 @@ const create = (baseURL = 'https://graph.facebook.com/v2.9/') => {
   }
 
   const albumId = '1726444857365752';
-  const token = '...';
+  const appId = '...';
+  const appSecret = '...';
+  const token = `${appId}|${appSecret}`;
   const getFrogAlbumPhotos = () => api.get(`${albumId}/photos`, { fields: 'images', access_token: token });
 
   return {
