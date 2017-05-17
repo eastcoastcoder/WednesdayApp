@@ -49,6 +49,7 @@
 		DEC8FF3793D144A4B16DC915 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B5AC1FEC36744F3B66177CF /* Octicons.ttf */; };
 		E8A2C56A7F644690B8B029A1 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34F1B95240CF4CF8BC47838A /* libRNDeviceInfo.a */; };
 		F04E7585B6FD4A04B8EB8ED7 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE4B7F486A464668B16C9C41 /* Foundation.ttf */; };
+		F3F49BAA1EC15BC1003B2464 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,12 +263,19 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		F36AAFD41EBEB3DD0070783E /* PBXContainerItemProxy */ = {
+		F3F49B931EC15BA5003B2464 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 896BC1B21B1341F6A5F61248 /* RNVectorIcons.xcodeproj */;
+			containerPortal = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = A39873CE1EA65EE60051E01A;
-			remoteInfo = "RNVectorIcons-tvOS";
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		F3F49B951EC15BA5003B2464 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
+			remoteInfo = "RCTPushNotification-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -310,6 +318,8 @@
 		CE4B7F486A464668B16C9C41 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D00F3C2290184B7ABCFA20DD /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		D286B9FBF1304345B3CB81DB /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
+		F3F49B741EC158CB003B2464 /* WednesdayApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = WednesdayApp.entitlements; path = WednesdayApp/WednesdayApp.entitlements; sourceTree = "<group>"; };
+		F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		F4DEAD6219B64E1589324C36 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		F8E13893938F4806871D2D5A /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -327,6 +337,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3F49BAA1EC15BC1003B2464 /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -449,6 +460,7 @@
 		13B07FAE1A68108700A75B9A /* WednesdayApp */ = {
 			isa = PBXGroup;
 			children = (
+				F3F49B741EC158CB003B2464 /* WednesdayApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -548,6 +560,7 @@
 				00E356EF1AD99517003FC87E /* WednesdayAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				5CB8F96E4D944A7D9835FE98 /* Resources */,
+				F3F49B831EC15BA5003B2464 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -576,7 +589,6 @@
 			isa = PBXGroup;
 			children = (
 				F36AAFD31EBEB3DD0070783E /* libRNVectorIcons.a */,
-				F36AAFD51EBEB3DD0070783E /* libRNVectorIcons-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -585,6 +597,23 @@
 			isa = PBXGroup;
 			children = (
 				F36AAFCF1EBEB3DD0070783E /* libRNDeviceInfo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F3F49B831EC15BA5003B2464 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F3F49B851EC15BA5003B2464 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */,
+				F3F49B961EC15BA5003B2464 /* libRCTPushNotification-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -678,7 +707,13 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = B72KXHBE8U;
+						DevelopmentTeam = WB2DWYC4G5;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -726,6 +761,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = F3F49B851EC15BA5003B2464 /* Products */;
+					ProjectRef = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -967,11 +1006,18 @@
 			remoteRef = F36AAFD21EBEB3DD0070783E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F36AAFD51EBEB3DD0070783E /* libRNVectorIcons-tvOS.a */ = {
+		F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libRNVectorIcons-tvOS.a";
-			remoteRef = F36AAFD41EBEB3DD0070783E /* PBXContainerItemProxy */;
+			path = libRCTPushNotification.a;
+			remoteRef = F3F49B931EC15BA5003B2464 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F3F49B961EC15BA5003B2464 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = F3F49B951EC15BA5003B2464 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1181,14 +1227,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = WednesdayApp/WednesdayApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = B72KXHBE8U;
+				DEVELOPMENT_TEAM = WB2DWYC4G5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = WednesdayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1198,6 +1247,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = WednesdayApp;
+				PROVISIONING_PROFILE = "07209e04-2752-4edc-a946-45c401b867cd";
+				PROVISIONING_PROFILE_SPECIFIER = ios;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1206,13 +1257,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = WednesdayApp/WednesdayApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B72KXHBE8U;
+				DEVELOPMENT_TEAM = WB2DWYC4G5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = WednesdayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1222,6 +1276,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = WednesdayApp;
+				PROVISIONING_PROFILE = "07209e04-2752-4edc-a946-45c401b867cd";
+				PROVISIONING_PROFILE_SPECIFIER = ios;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
