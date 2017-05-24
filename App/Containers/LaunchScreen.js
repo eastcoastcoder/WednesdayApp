@@ -4,7 +4,7 @@ import PushNotification from 'react-native-push-notification';
 import { Images } from '../Themes';
 import styles from './Styles/LaunchScreenStyles';
 import API from '../Services/Api';
-// import DevscreensButton from '../../ignite/DevScreens/DevscreensButton';
+import DevscreensButton from '../../ignite/DevScreens/DevscreensButton';
 
 export default class LaunchScreen extends React.Component {
   constructor(props) {
@@ -30,10 +30,13 @@ export default class LaunchScreen extends React.Component {
 
   render() {
     PushNotification.localNotification({
-      // title: 'My Notification Title',
-      message: 'My Notification Message'
+      /* iOS and Android properties */
+      title: 'It is Wednesday', // (optional, for iOS this is only used in apple watch, the title will be the app name on other iOS devices)
+      message: 'It is Wednesday My Dudes!', // (required)
+      playSound: false, // (optional) default: true
+      soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
     });
-    // console.tron.log(PushNotification);
+    console.tron.log(PushNotification);
 
     if (this.state.isLoading) {
       return (
@@ -67,7 +70,7 @@ export default class LaunchScreen extends React.Component {
               </Text>
             </View>
 
-            {/* <DevscreensButton />*/}
+            <DevscreensButton />
           </ScrollView>
         </View>
       );

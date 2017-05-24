@@ -1,7 +1,6 @@
-// a library to wrap and simplify api calls
+import Secrets from 'react-native-config';
 import apisauce from 'apisauce';
 
-// our "constructor"
 const create = (baseURL = 'https://graph.facebook.com/v2.9/') => {
   const api = apisauce.create({
     baseURL,
@@ -16,9 +15,7 @@ const create = (baseURL = 'https://graph.facebook.com/v2.9/') => {
   }
 
   const albumId = '1726444857365752';
-  const appId = '...';
-  const appSecret = '...';
-  const token = `${appId}|${appSecret}`;
+  const token = `${Secrets.APPID}|${Secrets.APPSECRET}`;
   const getFrogAlbumPhotos = () => api.get(`${albumId}/photos`, { fields: 'images', access_token: token });
 
   return {
