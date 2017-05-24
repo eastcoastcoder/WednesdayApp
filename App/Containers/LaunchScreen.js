@@ -1,15 +1,17 @@
 import React from 'react';
-import { ScrollView, Text, Image, View } from 'react-native';
+import { ScrollView, Text, Image, View, AppState } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import { Images } from '../Themes';
 import styles from './Styles/LaunchScreenStyles';
 import API from '../Services/Api';
 import DevscreensButton from '../../ignite/DevScreens/DevscreensButton';
+import PushNotificationController from '../Config/PushController';
 
 export default class LaunchScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
     this.state = {
       data: [],
       isLoading: true,
@@ -28,16 +30,27 @@ export default class LaunchScreen extends React.Component {
     });
   }
 
-  render() {
-    PushNotification.localNotification({
-      /* iOS and Android properties */
-      title: 'It is Wednesday', // (optional, for iOS this is only used in apple watch, the title will be the app name on other iOS devices)
-      message: 'It is Wednesday My Dudes!', // (required)
-      playSound: false, // (optional) default: true
-      soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-    });
-    console.tron.log(PushNotification);
+  componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange);
+  }
 
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
+  handleAppStateChange(appState) {
+    console.tron.log(appState);
+    if (appState === 'background' && this.state.isWednesday) {
+      for (let i = 0; i < 3; i++) {
+        PushNotification.localNotification({
+          title: 'It is Wednesday',
+          message: 'It is Wednesday My Dudes!',
+        });
+      }
+    }
+  }
+
+  render() {
     if (this.state.isLoading) {
       return (
         <View style={styles.mainContainer}>
@@ -69,7 +82,6 @@ export default class LaunchScreen extends React.Component {
                 {'It is not Wednesday my Dudes...'}
               </Text>
             </View>
-
             <DevscreensButton />
           </ScrollView>
         </View>
@@ -88,8 +100,8 @@ export default class LaunchScreen extends React.Component {
               {'It is Wednesday my Dudes'}
             </Text>
           </View>
-
-          {/* <DevscreensButton />*/}
+          <PushNotificationController />
+          <DevscreensButton />
         </ScrollView>
       </View>
     );

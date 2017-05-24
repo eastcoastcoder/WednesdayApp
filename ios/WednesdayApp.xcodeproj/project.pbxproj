@@ -49,7 +49,7 @@
 		DEC8FF3793D144A4B16DC915 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B5AC1FEC36744F3B66177CF /* Octicons.ttf */; };
 		E8A2C56A7F644690B8B029A1 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34F1B95240CF4CF8BC47838A /* libRNDeviceInfo.a */; };
 		F04E7585B6FD4A04B8EB8ED7 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE4B7F486A464668B16C9C41 /* Foundation.ttf */; };
-		F3F49BAA1EC15BC1003B2464 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */; };
+		F3197D1F1ED51A4D003C9460 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +242,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		F3197D091ED51A12003C9460 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3197CF81ED51A11003C9460 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
 		F36AAFCB1EBEB3DD0070783E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5208DAA37775468FA17FD874 /* ReactNativeConfig.xcodeproj */;
@@ -263,19 +270,26 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		F3E24FC51ED534B00079DA48 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F3E24FB81ED534AD0079DA48;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
+		F3E24FC91ED534B00079DA48 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3197CF81ED51A11003C9460 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F3E24FB81ED534AD0079DA48;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
 		F3F49B931EC15BA5003B2464 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTPushNotification;
-		};
-		F3F49B951EC15BA5003B2464 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
-			remoteInfo = "RCTPushNotification-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -318,6 +332,7 @@
 		CE4B7F486A464668B16C9C41 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D00F3C2290184B7ABCFA20DD /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		D286B9FBF1304345B3CB81DB /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
+		F3197CF81ED51A11003C9460 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		F3F49B741EC158CB003B2464 /* WednesdayApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = WednesdayApp.entitlements; path = WednesdayApp/WednesdayApp.entitlements; sourceTree = "<group>"; };
 		F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		F4DEAD6219B64E1589324C36 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -337,8 +352,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3F49BAA1EC15BC1003B2464 /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				F3197D1F1ED51A4D003C9460 /* libRCTPushNotification.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -525,6 +540,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F3197CF81ED51A11003C9460 /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -577,6 +593,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F3197CF91ED51A11003C9460 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F3197D0A1ED51A12003C9460 /* libRCTPushNotification.a */,
+				F3E24FCA1ED534B00079DA48 /* libRCTPushNotification-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F36AAFAB1EBEB3DD0070783E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -613,7 +638,7 @@
 			isa = PBXGroup;
 			children = (
 				F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */,
-				F3F49B961EC15BA5003B2464 /* libRCTPushNotification-tvOS.a */,
+				F3E24FC61ED534B00079DA48 /* libRCTPushNotification-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -707,8 +732,8 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = WB2DWYC4G5;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = CW482378P7;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -765,6 +790,10 @@
 				{
 					ProductGroup = F3F49B851EC15BA5003B2464 /* Products */;
 					ProjectRef = F3F49B841EC15BA5003B2464 /* RCTPushNotification.xcodeproj */;
+				},
+				{
+					ProductGroup = F3197CF91ED51A11003C9460 /* Products */;
+					ProjectRef = F3197CF81ED51A11003C9460 /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -985,6 +1014,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F3197D0A1ED51A12003C9460 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = F3197D091ED51A12003C9460 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F36AAFCC1EBEB3DD0070783E /* libReactNativeConfig.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1006,18 +1042,25 @@
 			remoteRef = F36AAFD21EBEB3DD0070783E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F3E24FC61ED534B00079DA48 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = F3E24FC51ED534B00079DA48 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F3E24FCA1ED534B00079DA48 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = F3E24FC91ED534B00079DA48 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F3F49B941EC15BA5003B2464 /* libRCTPushNotification.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRCTPushNotification.a;
 			remoteRef = F3F49B931EC15BA5003B2464 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F3F49B961EC15BA5003B2464 /* libRCTPushNotification-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libRCTPushNotification-tvOS.a";
-			remoteRef = F3F49B951EC15BA5003B2464 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1229,9 +1272,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WednesdayApp/WednesdayApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = WB2DWYC4G5;
+				DEVELOPMENT_TEAM = CW482378P7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -1247,8 +1291,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = WednesdayApp;
-				PROVISIONING_PROFILE = "07209e04-2752-4edc-a946-45c401b867cd";
-				PROVISIONING_PROFILE_SPECIFIER = ios;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1259,8 +1303,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WednesdayApp/WednesdayApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WB2DWYC4G5;
+				DEVELOPMENT_TEAM = CW482378P7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -1276,8 +1321,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = WednesdayApp;
-				PROVISIONING_PROFILE = "07209e04-2752-4edc-a946-45c401b867cd";
-				PROVISIONING_PROFILE_SPECIFIER = ios;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
