@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, Image, View, AppState } from 'react-native';
+import { ScrollView, Text, Image, View, AppState, TouchableOpacity } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import { Images } from '../Themes';
 import styles from './Styles/LaunchScreenStyles';
@@ -7,15 +7,40 @@ import API from '../Services/Api';
 import DevscreensButton from '../../ignite/DevScreens/DevscreensButton';
 import PushNotificationController from '../Config/PushController';
 
+const Sound = require('react-native-sound');
+const REEEEE = require('../Images/REEEEE.m4a');
+const WednesdayPhrase = require('../Images/Wednesday.m4a');
+
 export default class LaunchScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    // Setup Sound Stuffs
+    Sound.setCategory('Ambient', true);
+    this.playREEEEE = () => {
+      const s = new Sound(REEEEE, (e) => {
+        if (e) {
+          console.log('error', e);
+        } else {
+          s.play(() => s.release());
+        }
+      });
+    };
+    this.playWednesdayPhrase = () => {
+      const s = new Sound(WednesdayPhrase, (e) => {
+        if (e) {
+          console.log('error', e);
+        } else {
+          s.play(() => s.release());
+        }
+      });
+    };
     this.handleAppStateChange = this.handleAppStateChange.bind(this);
     this.state = {
       data: [],
       isLoading: true,
-      isWednesday: new Date().getDay() === 3
+      // isWednesday: new Date().getDay() === 3
+      isWednesday: true
     };
 
     this.getData();
@@ -91,14 +116,17 @@ export default class LaunchScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode="stretch" />
         <ScrollView style={styles.container}>
-          <View style={styles.centered}>
-            <Image source={{ uri: randomDude.images[0].source }} style={styles.dude} />
-          </View>
-
+          <TouchableOpacity onPress={this.playREEEEE}>
+            <View style={styles.centered}>
+              <Image source={{ uri: randomDude.images[0].source }} style={styles.dude} />
+            </View>
+          </TouchableOpacity>
           <View style={styles.section} >
-            <Text style={styles.sectionText}>
-              {'It is Wednesday my Dudes'}
-            </Text>
+            <TouchableOpacity onPress={this.playWednesdayPhrase}>
+              <Text style={styles.sectionText}>
+                {'It is Wednesday my Dudes'}
+              </Text>
+            </TouchableOpacity>
           </View>
           <PushNotificationController />
           <DevscreensButton />
