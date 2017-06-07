@@ -66,7 +66,7 @@ export default class App extends Component {
     let notSoRandomNumber = (Math.random() * results.length | 0);
     const omittedArr = [0, 7, 21];
     // If any of the following reserved dudes, reroll
-    if (notSoRandomNumber in omittedArr) {
+    while (notSoRandomNumber in omittedArr) {
       notSoRandomNumber = (Math.random() * results.length | 0);
     }
     const randomDude = results[notSoRandomNumber];
