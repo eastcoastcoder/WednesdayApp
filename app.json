@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "wednesday",
+    "description": "A very interesting project.",
+    "slug": "wednesday",
+    "privacy": "public",
+    "icon": "./assets/icons/app.png",
+    "version": "1.0.0",
+    "sdkVersion": "25.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "loading": {
+      "icon": "./assets/icons/loading.png",
+      "hideExponentText": false
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"]
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}

@@ -22,7 +22,7 @@
   },
   "rules": {
     "arrow-parens": ["off"],
-    "compat/compat": 2,
+    "compat/compat": "off",
     "class-methods-use-this": "off",    
     "consistent-return": "off",
     "comma-dangle": "off",
