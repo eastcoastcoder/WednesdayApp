@@ -6,7 +6,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import DudeScreen from '../screens/DudeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import CollectionScreen from '../screens/CollectionScreen';
 import DefaultHomeScreen from '../screens/DefaultHomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -15,10 +15,10 @@ export default TabNavigator(
     Dude: {
       screen: DudeScreen,
     },
-    Links: {
-      screen: LinksScreen,
+    Collection: {
+      screen: CollectionScreen,
     },
-    DefaultHomeScreen: {
+    DefaultHome: {
       screen: DefaultHomeScreen,
     },
     Settings: {
@@ -37,8 +37,14 @@ export default TabNavigator(
                 ? `ios-information-circle${focused ? '' : '-outline'}`
                 : 'md-information-circle';
             break;
-          case 'Links':
+          case 'Collection':
             iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
+            break;
+          case 'DefaultHome':
+            iconName =
+              Platform.OS === 'ios'
+                ? `ios-information-circle${focused ? '' : '-outline'}`
+                : 'md-information-circle';
             break;
           case 'Settings':
             iconName =

@@ -11,20 +11,18 @@ export default class App extends React.Component {
 
   render() {
     return (!this.state.isLoadingComplete && !this.props.skipLoadingScreen)
-      ? (
+      ?
         <AppLoading
           startAsync={this._loadResourcesAsync}
           onError={this._handleLoadingError}
           onFinish={this._handleFinishLoading}
         />
-      )
-      : (
+      :
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
           <RootNavigation />
-        </View>
-      );
+        </View>;
   }
 
   _loadResourcesAsync = async () => Promise.all([
@@ -32,20 +30,18 @@ export default class App extends React.Component {
       require('./assets/images/robot-dev.png'),
       require('./assets/images/robot-prod.png'),
       require('./assets/sounds/REEEEE.m4a'),
+      require('./assets/sounds/Wednesday.m4a'),
       require('./assets/sounds/NotWednesday.mp3'),
     ]),
     Font.loadAsync({
-      // This is the font that we are using for our tab bar
+      // Tab bar
       ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free
-      // to remove this if you are not using it in your app
+      // DefaultHomeScreen
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
     }),
   ]);
 
   _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
     console.warn(error);
   };
 

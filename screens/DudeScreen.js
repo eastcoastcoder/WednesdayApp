@@ -5,8 +5,6 @@ import FrogImage from '../components/frogimage';
 import FrogVideo from '../components/frogvideo';
 import styles from '../styles';
 
-const WednesdayFile = require('../assets/sounds/Wednesday.m4a');
-
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +20,7 @@ export default class HomeScreen extends React.Component {
   playWednesdayPhrase = async () => {
     await Expo.Audio.setIsEnabledAsync(true);
     const Wednesday = new Expo.Audio.Sound();
-    await Wednesday.loadAsync(WednesdayFile);
+    await Wednesday.loadAsync(require('../assets/sounds/Wednesday.m4a'));
     await Wednesday.playAsync();
   };
 
