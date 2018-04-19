@@ -1,5 +1,5 @@
 #  WednesdayApp
-ASK ME FOR THE config.js FILE 
+ASK ME FOR THE .env FILE 
 
 IT WON'T DO MUCH WITHOUT IT
 
