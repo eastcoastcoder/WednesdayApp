@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import FrogImage from '../components/frogimage';
 import FrogVideo from '../components/frogvideo';
 import styles from '../styles';
@@ -10,11 +10,17 @@ export default class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
-      isWednesday: new Date().getDay() === 3,
-      // isWednesday: true, // Testing purposes only, very dangerous
+      isWednesday: (new Date().getDay() === 3),
       hitCount: '!'
     };
-    this.handlePress = this.handlePress.bind(this);
+    this.props.navigation.addListener(
+      'didFocus',
+      async () => {
+        const isGodMode = !!(await AsyncStorage.getItem('godmode'));
+        const isWednesday = this.state.isWednesday || isGodMode;
+        this.setState({ isWednesday });
+      },
+    );
   }
 
   playWednesdayPhrase = async () => {
@@ -24,7 +30,7 @@ export default class HomeScreen extends React.Component {
     await Wednesday.playAsync();
   };
 
-  handlePress() {
+  handlePress = () => {
     if (this.state.hitCount === '!!!!!!') {
       return this.setState({
         hitCount: '!'
@@ -39,13 +45,16 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    const wedText = this.state.isWednesday ? `It is Wednesday my Dudes${this.state.hitCount}` : 'It is not Wednesday my Dudes...\nTune in next week!';
     return (
       <View style={styles.container}>
-        {this.state.hitCount === '!!!!!' ? <FrogVideo /> : <FrogImage wedProp={this.state.isWednesday} />}
+        {this.state.hitCount === '!!!!!'
+        ? <FrogVideo />
+        : <FrogImage wedProp={this.state.isWednesday} />}
         <TouchableOpacity>
           <Text onPress={this.handlePress} style={styles.paragraph}>
-            {wedText}
+            {this.state.isWednesday
+          ? `It is Wednesday my Dudes${this.state.hitCount}`
+          : 'It is not Wednesday my Dudes...\nTune in next week!'}
           </Text>
         </TouchableOpacity>
       </View>

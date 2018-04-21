@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch } from 'react-native';
+import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, AsyncStorage } from 'react-native';
 
 export default class SettingsScreen extends Component {
   static navigationOptions = {
@@ -17,17 +17,17 @@ export default class SettingsScreen extends Component {
     ],
   };
 
-  onAlwaysWed = value => {
+  onAlwaysWed = async () => {
     // Keep our listView modular
     const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
-    this.state.listViewData[onAlwaysWedIdx].enabled = value;
-    // TODO: Save to Context
+    this.state.listViewData[onAlwaysWedIdx].enabled = !this.state.listViewData[onAlwaysWedIdx].enabled;
+    await AsyncStorage.setItem('godmode', JSON.stringify({ value: true }));
     this.setState(this.state);
   }
 
-  onDudesClear = () => {
+  onDudesClear = async () => {
     // TODO: Call Alert Prompt
-    // TODO: Clear AsyncStorage
+    await AsyncStorage.removeItem('dudesCollection');
     console.log('dudesClearPressed');
   }
 
