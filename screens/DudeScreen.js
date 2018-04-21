@@ -10,14 +10,14 @@ export default class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
-      isWednesday: (new Date().getDay() === 3),
+      isWednesday: false,
       hitCount: '!'
     };
     this.props.navigation.addListener(
       'didFocus',
       async () => {
-        const isGodMode = !!(await AsyncStorage.getItem('godmode'));
-        const isWednesday = this.state.isWednesday || isGodMode;
+        const isGodMode = JSON.parse(await AsyncStorage.getItem('godmode')).value;
+        const isWednesday = (new Date().getDay() === 3) || isGodMode;
         this.setState({ isWednesday });
       },
     );

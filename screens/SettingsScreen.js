@@ -17,11 +17,18 @@ export default class SettingsScreen extends Component {
     ],
   };
 
+  async componentWillMount() {
+    const godmode = !!(await AsyncStorage.getItem('godmode'));
+    const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
+    this.state.listViewData[onAlwaysWedIdx].enabled = godmode;
+    this.setState(this.state);
+  }
+
   onAlwaysWed = async () => {
     // Keep our listView modular
     const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
     this.state.listViewData[onAlwaysWedIdx].enabled = !this.state.listViewData[onAlwaysWedIdx].enabled;
-    await AsyncStorage.setItem('godmode', JSON.stringify({ value: true }));
+    await AsyncStorage.setItem('godmode', JSON.stringify({ value: this.state.listViewData[onAlwaysWedIdx].enabled }));
     this.setState(this.state);
   }
 
