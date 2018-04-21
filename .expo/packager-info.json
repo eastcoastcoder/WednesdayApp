@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19002,
-  "packagerPort": 19003,
-  "packagerPid": 9989,
-  "expoServerNgrokUrl": "https://yg-j9t.ethanx94.wednesdayapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.yg-j9t.ethanx94.wednesdayapp.exp.direct",
-  "ngrokPid": 10011
+  "expoServerPort": 19000,
+  "packagerPort": 8081,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://hz-imd.ethanx94.wednesdayapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.hz-imd.ethanx94.wednesdayapp.exp.direct",
+  "ngrokPid": 19740
 }

@@ -4,9 +4,6 @@ import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { APPID, APPSECRET } from 'react-native-dotenv';
 import styles from '../styles';
 
-const REEEEEFile = require('../assets/sounds/REEEEE.m4a');
-const NotWednesdayFile = require('../assets/sounds/NotWednesday.mp3');
-
 export default class FrogImage extends React.Component {
   constructor(props) {
     super(props);
@@ -36,13 +33,13 @@ export default class FrogImage extends React.Component {
 
   playREEEEE = async () => {
     const REEEEE = new Expo.Audio.Sound();
-    await REEEEE.loadAsync(REEEEEFile);
+    await REEEEE.loadAsync(require('../assets/sounds/REEEEE.m4a'));
     await REEEEE.playAsync();
   };
 
   playNotWednesdaySound = async () => {
     const Wednesday = new Expo.Audio.Sound();
-    await Wednesday.loadAsync(NotWednesdayFile);
+    await Wednesday.loadAsync(require('../assets/sounds/NotWednesday.mp3'));
     await Wednesday.playAsync();
   };
 
