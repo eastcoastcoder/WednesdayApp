@@ -1,6 +1,6 @@
 {
-  "expo": {
     "name": "wednesday",
+    "displayName": "wednesday",
     "description": "A very interesting project.",
     "slug": "wednesday",
     "privacy": "public",
@@ -27,5 +27,4 @@
     "ios": {
       "supportsTablet": true
     }
-  }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExpoConfigView } from '@expo/samples';
+import { View, Text } from 'react-native';
 
 export default class CollectionScreen extends React.Component {
   static navigationOptions = {
@@ -8,7 +8,9 @@ export default class CollectionScreen extends React.Component {
 
   render() {
     return (
-      <ExpoConfigView />
+      <View>
+        <Text>Dummy</Text>
+      </View>
     );
   }
 }

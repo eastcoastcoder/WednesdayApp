@@ -1,7 +1,8 @@
-import Expo from 'expo';
+// import Expo from 'expo';
 import React from 'react';
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { APPID, APPSECRET } from 'react-native-dotenv';
+import Sound from 'react-native-sound';
 import styles from '../styles';
 
 export default class FrogImage extends React.Component {
@@ -12,7 +13,7 @@ export default class FrogImage extends React.Component {
       data: [],
       isLoading: true
     };
-    Expo.Audio.setIsEnabledAsync(true);
+    Sound.setCategory('Playback', true);
     this.getData();
   }
 
@@ -32,15 +33,39 @@ export default class FrogImage extends React.Component {
   }
 
   playREEEEE = async () => {
-    const REEEEE = new Expo.Audio.Sound();
-    await REEEEE.loadAsync(require('../assets/sounds/REEEEE.m4a'));
-    await REEEEE.playAsync();
+    const REEEEE = new Sound(require('../assets/sounds/REEEEE.m4a'), (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      REEEEE.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+          REEEEE.reset();
+        }
+      });
+      console.log(`duration in seconds: ${REEEEE.getDuration()}number of channels: ${REEEEE.getNumberOfChannels()}`);
+    });
   };
 
   playNotWednesdaySound = async () => {
-    const Wednesday = new Expo.Audio.Sound();
-    await Wednesday.loadAsync(require('../assets/sounds/NotWednesday.mp3'));
-    await Wednesday.playAsync();
+    const notWednesday = new Sound(require('../assets/sounds/NotWednesday.mp3'), (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      notWednesday.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+          notWednesday.reset();
+        }
+      });
+      console.log(`duration in seconds: ${notWednesday.getDuration()}number of channels: ${notWednesday.getNumberOfChannels()}`);
+    });
   };
 
   render() {
@@ -72,4 +97,4 @@ export default class FrogImage extends React.Component {
   }
 }
 
-Expo.registerRootComponent(FrogImage);
+// Expo.registerRootComponent(FrogImage);

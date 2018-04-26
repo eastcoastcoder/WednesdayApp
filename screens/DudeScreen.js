@@ -1,14 +1,15 @@
-import Expo from 'expo';
+// import Expo from 'expo';
 import React from 'react';
 import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
+import Sound from 'react-native-sound';
 import FrogImage from '../components/frogimage';
-import FrogVideo from '../components/frogvideo';
+// import FrogVideo from '../components/frogvideo';
 import styles from '../styles';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-
+    Sound.setCategory('Playback', true);
     this.state = {
       isWednesday: false,
       hitCount: '!'
@@ -24,10 +25,21 @@ export default class HomeScreen extends React.Component {
   }
 
   playWednesdayPhrase = async () => {
-    await Expo.Audio.setIsEnabledAsync(true);
-    const Wednesday = new Expo.Audio.Sound();
-    await Wednesday.loadAsync(require('../assets/sounds/Wednesday.m4a'));
-    await Wednesday.playAsync();
+    const Wednesday = new Sound(require('../assets/sounds/Wednesday.m4a'), error => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      Wednesday.play(success => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+          Wednesday.reset();
+        }
+      });
+      console.log(`duration in seconds: ${Wednesday.getDuration()}number of channels: ${Wednesday.getNumberOfChannels()}`);
+    });
   };
 
   handlePress = () => {
@@ -48,7 +60,8 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         {this.state.hitCount === '!!!!!'
-        ? <FrogVideo />
+        // ? <FrogVideo />
+        ? null
         : <FrogImage wedProp={this.state.isWednesday} />}
         <TouchableOpacity>
           <Text onPress={this.handlePress} style={styles.paragraph}>

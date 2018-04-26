@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { Constants } from 'expo';
+// import { Constants } from 'expo';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
+    // paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
   },
   paragraph: {
