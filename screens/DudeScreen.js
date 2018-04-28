@@ -1,4 +1,3 @@
-// import Expo from 'expo';
 import React from 'react';
 import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import Sound from 'react-native-sound';
@@ -9,7 +8,6 @@ import styles from '../styles';
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    Sound.setCategory('Playback', true);
     this.state = {
       isWednesday: false,
       hitCount: '!'

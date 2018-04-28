@@ -1,4 +1,3 @@
-// import Expo from 'expo';
 import React from 'react';
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { APPID, APPSECRET } from 'react-native-dotenv';
@@ -11,15 +10,26 @@ export default class FrogImage extends React.Component {
 
     this.state = {
       data: [],
-      isLoading: true
+      isLoading: true,
+      notWednesday: null,
     };
-    Sound.setCategory('Playback', true);
     this.getData();
   }
+
+  async componentWillMount() {
+    Sound.setCategory('Playback', true);
+    this.setState({
+      notWednesday: new Sound('NotWednesday.mp3', Sound.MAIN_BUNDLE),
+      REEEEE: new Sound('REEEEE.m4a', Sound.MAIN_BUNDLE),
+    });
+  }
+
+  playSound = (soundObj) => soundObj.play();
 
   getData = async () => {
     const token = `${APPID}|${APPSECRET}`;
     const url = `https://graph.facebook.com/v2.9/1726444857365752/photos?fields=images&access_token=${token}`;
+    // const newRepo = `https://graph.facebook.com/v2.9/202537220084441/photos?fields=images,id&access_token=${token}`;
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -31,42 +41,6 @@ export default class FrogImage extends React.Component {
       return console.log(err);
     }
   }
-
-  playREEEEE = async () => {
-    const REEEEE = new Sound(require('../assets/sounds/REEEEE.m4a'), (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-      REEEEE.play((success) => {
-        if (success) {
-          console.log('successfully finished playing');
-        } else {
-          console.log('playback failed due to audio decoding errors');
-          REEEEE.reset();
-        }
-      });
-      console.log(`duration in seconds: ${REEEEE.getDuration()}number of channels: ${REEEEE.getNumberOfChannels()}`);
-    });
-  };
-
-  playNotWednesdaySound = async () => {
-    const notWednesday = new Sound(require('../assets/sounds/NotWednesday.mp3'), (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-      notWednesday.play((success) => {
-        if (success) {
-          console.log('successfully finished playing');
-        } else {
-          console.log('playback failed due to audio decoding errors');
-          notWednesday.reset();
-        }
-      });
-      console.log(`duration in seconds: ${notWednesday.getDuration()}number of channels: ${notWednesday.getNumberOfChannels()}`);
-    });
-  };
 
   render() {
     if (this.state.isLoading) {
@@ -90,7 +64,10 @@ export default class FrogImage extends React.Component {
     }
     const randomDude = this.props.wedProp ? results[notSoRandomNumber] : results[0];
     return (
-      <TouchableOpacity onPress={this.props.wedProp ? this.playREEEEE : this.playNotWednesdaySound}>
+      <TouchableOpacity onPress={this.props.wedProp
+        ? () => this.playSound(this.state.REEEEE)
+        : () => this.playSound(this.state.notWednesday)}
+      >
         <Image source={{ uri: randomDude.images[0].source }} style={styles.dude} />
       </TouchableOpacity>
     );
