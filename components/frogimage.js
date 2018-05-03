@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, View, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { APPID, APPSECRET } from 'react-native-dotenv';
 import Sound from 'react-native-sound';
 import styles from '../styles';
@@ -22,25 +22,30 @@ export default class FrogImage extends React.Component {
 
   async componentDidMount() {
     const token = `${APPID}|${APPSECRET}`;
-    const url = `https://graph.facebook.com/v2.9/1726444857365752/photos?fields=images&access_token=${token}`;
-    // const newRepo = `https://graph.facebook.com/v2.9/202537220084441/photos?fields=images,id&access_token=${token}`;
+    const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${token}`;
+    const url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&access_token=${token}`;
     try {
-      const response = await fetchJSON(url);
-      const results = response.data;
-      for (let i = 0; i < 5; i++) {
-        let notSoRandomNumber = (Math.random() * results.length | 0);
-        const omittedArr = [0, 7, 21];
-        // If any of the following reserved dudes, reroll
-        while (omittedArr.includes(notSoRandomNumber)) {
-          notSoRandomNumber = (Math.random() * results.length | 0);
+      if (this.props.wedProp) {
+        const response = await fetchJSON(url);
+        const results = response.data;
+        for (let i = 0; i < 5; i++) {
+          const randomIndex = (Math.random() * results.length | 0);
+          // Implement categorization strats here
+          this.state.todaysDudes.push(randomIndex);
         }
-        this.state.todaysDudes.push(notSoRandomNumber);
+        // Save by object ID, not random index
+        // const myDudes = JSON.parse(await AsyncStorage.getItem('myDudes')) || [];
+        // await AsyncStorage.setItem('myDudes', JSON.stringify(myDudes.concat(this.state.todaysDudes)));
+        return this.setState({
+          isLoading: false,
+          results,
+          todaysDudes: this.state.todaysDudes,
+          notWednesdayDude: results[0],
+        });
       }
-      this.setState({
+      return this.setState({
         isLoading: false,
-        results,
-        todaysDudes: this.state.todaysDudes,
-        notWednesdayDude: results[0],
+        notWednesdayDude: (await fetchJSON(notWedUrl)).data[0],
       });
     } catch (err) {
       return console.log(err);
@@ -50,27 +55,19 @@ export default class FrogImage extends React.Component {
   render() {
     const { isLoading, currentDude, results, todaysDudes, REEEEE, notWednesday, notWednesdayDude } = this.state;
     const { wedProp } = this.props;
-    return isLoading
-      ? (
-        <View style={styles.container}>
-          <View style={styles.container} >
-            <Text style={styles.paragraph}>
-              {'Loading...'}
-            </Text>
-          </View>
-        </View>)
-      : (
+    return !isLoading
+      ?
         <TouchableOpacity onPress={wedProp
-        ? () => {
-          REEEEE.play();
-          return currentDude < 4
-            ? this.setState({ currentDude: currentDude + 1 })
-            : this.setState({ currentDude: 0 });
-        }
-        : () => notWednesday.play()}
+          ? () => {
+            REEEEE.play();
+            return currentDude < 4
+              ? this.setState({ currentDude: currentDude + 1 })
+              : this.setState({ currentDude: 0 });
+            }
+          : () => notWednesday.play()}
         >
           <Image source={{ uri: wedProp ? results[todaysDudes[currentDude]].images[0].source : notWednesdayDude.images[0].source }} style={styles.dude} />
         </TouchableOpacity>
-      );
+      : <ActivityIndicator size="large" color="#0000ff" />;
   }
 }
