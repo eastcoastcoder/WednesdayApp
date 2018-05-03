@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { APPID, APPSECRET } from 'react-native-dotenv';
 import GridView from 'react-native-super-grid';
+import { fetchJSON } from '../util/fetchJSON';
 
 export default class CollectionScreen extends Component {
   static navigationOptions = {
@@ -12,14 +13,12 @@ export default class CollectionScreen extends Component {
     data: [],
   }
 
-  fetchJSON = async (input) => (await fetch(input)).json();
-
-  async componentWillMount() {
+  async componentDidMount() {
     const token = `${APPID}|${APPSECRET}`;
     let url = `https://graph.facebook.com/v2.9/202537220084441/photos?fields=images,id&limit=100&access_token=${token}`;
     try {
       while (url) {
-        const response = await this.fetchJSON(url);
+        const response = await fetchJSON(url);
         const final = response.data.map(d => findThumbnailDude(d.images));
         this.setState({
           data: this.state.data.concat(final),

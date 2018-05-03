@@ -33,6 +33,7 @@
     "import/no-named-as-default-member": "off",    
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
+    "react/no-did-mount-set-state": "off",        
     "react/no-unused-prop-types": "off",
     "react/no-string-refs": "off",
     "react/forbid-prop-types": "off",
