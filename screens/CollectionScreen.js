@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
-import { APPID, APPSECRET } from 'react-native-dotenv';
+import { StyleSheet, View, Image, AsyncStorage, ActivityIndicator } from 'react-native';
 import GridView from 'react-native-super-grid';
-import { fetchJSON } from '../util/fetchJSON';
 
 export default class CollectionScreen extends Component {
   static navigationOptions = {
@@ -10,53 +8,34 @@ export default class CollectionScreen extends Component {
   };
 
   state = {
-    data: [],
+    isLoading: true,
   }
 
   async componentDidMount() {
-    const token = `${APPID}|${APPSECRET}`;
-    let url = `https://graph.facebook.com/v2.9/202537220084441/photos?fields=images,id&limit=100&access_token=${token}`;
     try {
-      while (url) {
-        const response = await fetchJSON(url);
-        const final = response.data.map(d => findThumbnailDude(d.images));
-        this.setState({
-          data: this.state.data.concat(final),
-        });
-        url = response.paging.next;
-        console.log(this.state.data);
-      }
+      const finalCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
+      this.setState({ finalCollection, isLoading: false });
     } catch (err) {
       return console.log(err);
     }
   }
 
   render() {
-    return (
-      <GridView
-        itemDimension={130}
-        items={this.state.data}
-        style={styles.gridView}
-        renderItem={uri => (
-          <View style={styles.itemContainer}>
-            <Image source={{ uri }} style={styles.backgroundImage} />
-          </View>
+    return !this.state.isLoading
+      ?
+        <GridView
+          itemDimension={130}
+          items={this.state.finalCollection}
+          style={styles.gridView}
+          renderItem={({ thumbnail }) => (
+            <View style={styles.itemContainer}>
+              <Image source={{ uri: thumbnail }} style={styles.backgroundImage} />
+            </View>
         )}
-      />
-    );
+        />
+      : <ActivityIndicator size="large" color="#0000ff" />;
   }
 }
-
-// Takes image array
-// Returns url with image of minimum height
-const findThumbnailDude = (dudeArr) => {
-  let minHeight = dudeArr[0].height;
-  let sourceUrl = dudeArr[0].source;
-  for (const { height, source } of dudeArr) {
-    if (height < minHeight) { minHeight = height; sourceUrl = source; }
-  }
-  return sourceUrl;
-};
 
 const styles = StyleSheet.create({
   gridView: {
