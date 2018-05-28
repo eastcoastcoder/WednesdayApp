@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 
 import DudeScreen from '../screens/DudeScreen';
 import CollectionScreen from '../screens/CollectionScreen';
-import DefaultHomeScreen from '../screens/DefaultHomeScreen';
+import EggScreen from '../screens/EggScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 export default TabNavigator(
@@ -18,8 +18,8 @@ export default TabNavigator(
     Collection: {
       screen: CollectionScreen,
     },
-    DefaultHome: {
-      screen: DefaultHomeScreen,
+    Egg: {
+      screen: EggScreen,
     },
     Settings: {
       screen: SettingsScreen,
@@ -40,7 +40,7 @@ export default TabNavigator(
           case 'Collection':
             iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
             break;
-          case 'DefaultHome':
+          case 'Egg':
             iconName =
               Platform.OS === 'ios'
                 ? `ios-information-circle${focused ? '' : '-outline'}`

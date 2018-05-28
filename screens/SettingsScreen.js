@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, AsyncStorage } from 'react-native';
+import { GlobalContext } from '../util/GlobalContext';
 
 export default class SettingsScreen extends Component {
   static navigationOptions = {
@@ -17,18 +18,18 @@ export default class SettingsScreen extends Component {
     ],
   };
 
-  async componentWillMount() {
-    const godmode = !!(await AsyncStorage.getItem('godmode'));
-    const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
-    this.state.listViewData[onAlwaysWedIdx].enabled = godmode;
-    this.setState(this.state);
-  }
+  // async componentDidMount() {
+  //   const godmode = Boolean(await AsyncStorage.getItem('godmode'));
+  //   const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
+  //   this.state.listViewData[onAlwaysWedIdx].enabled = godmode;
+  //   this.forceUpdate();
+  // }
 
   onAlwaysWed = async () => {
     // Keep our listView modular
     const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
     this.state.listViewData[onAlwaysWedIdx].enabled = !this.state.listViewData[onAlwaysWedIdx].enabled;
-    await AsyncStorage.setItem('godmode', JSON.stringify({ value: this.state.listViewData[onAlwaysWedIdx].enabled }));
+    // await AsyncStorage.setItem('godmode', JSON.stringify({ value: this.state.listViewData[onAlwaysWedIdx].enabled }));
     this.setState(this.state);
   }
 
@@ -51,10 +52,14 @@ export default class SettingsScreen extends Component {
           </View>
         ))}
         {data.item.type === 'toggle' &&
-        <Switch
-          onValueChange={this[data.item.key].bind(this)}
-          value={data.item.enabled}
-        />}
+          <GlobalContext.Consumer>
+            {context => (
+              <Switch
+                onValueChange={context.toggleGodmode}
+                value={context.godmode}
+              />)
+        }
+          </GlobalContext.Consumer>}
       </View>
     </TouchableHighlight>
   )
