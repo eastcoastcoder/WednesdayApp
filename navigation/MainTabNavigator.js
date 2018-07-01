@@ -4,25 +4,24 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
-
-import DudeScreen from '../screens/DudeScreen';
-import CollectionScreen from '../screens/CollectionScreen';
-import EggScreen from '../screens/EggScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import Dude from '../screens/Dude';
+import Collection from '../screens/Collection';
+import Egg from '../screens/Egg';
+import Settings from '../screens/Settings';
 
 export default TabNavigator(
   {
     Dude: {
-      screen: DudeScreen,
+      screen: Dude,
     },
     Collection: {
-      screen: CollectionScreen,
+      screen: Collection,
     },
     Egg: {
-      screen: EggScreen,
+      screen: Egg,
     },
     Settings: {
-      screen: SettingsScreen,
+      screen: Settings,
     },
   },
   {

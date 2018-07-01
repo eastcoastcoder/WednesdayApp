@@ -1,20 +1,19 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import RootNavigation from './navigation/RootNavigation';
-import GlobalProvider from './util/GlobalProvider';
+import GlobalProvider from './contexts/GlobalProvider';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-        <GlobalProvider>
-          <RootNavigation />
-        </GlobalProvider>
-      </View>);
-  }
-}
+const App = () => (
+  <View style={styles.container}>
+    {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+    {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+    <GlobalProvider>
+      <RootNavigation />
+    </GlobalProvider>
+  </View>
+);
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {

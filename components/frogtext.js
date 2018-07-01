@@ -2,15 +2,13 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Sound from 'react-native-sound';
 import styles from '../styles';
+import contextWrap from '../util/contextWrap';
 
-export default class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hitCount: '!',
-      wednesday: new Sound('Wednesday.m4a', Sound.MAIN_BUNDLE),
-    };
-  }
+class FrogText extends React.Component {
+  state = {
+    hitCount: '!',
+    wednesday: new Sound('Wednesday.m4a', Sound.MAIN_BUNDLE),
+  };
 
   handlePress = () => {
     if (this.state.hitCount === '!!!!!') {
@@ -38,3 +36,5 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+export default contextWrap(FrogText);

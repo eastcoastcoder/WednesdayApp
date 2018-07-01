@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GlobalContext } from './GlobalContext';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 export default function contextWrap(InputComponent) {
   return class extends Component {

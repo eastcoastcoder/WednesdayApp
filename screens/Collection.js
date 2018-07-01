@@ -3,14 +3,14 @@ import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
 import GridView from 'react-native-super-grid';
 import contextWrap from '../util/contextWrap';
 
-class CollectionScreen extends Component {
+class Collection extends Component {
   static navigationOptions = {
     title: 'Collection',
   };
 
   state = {
     isLoading: this.props.context.isLoading,
-    dudesCollection: [],
+    dudesCollection: this.props.context.dudesCollection,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,7 +36,7 @@ class CollectionScreen extends Component {
   }
 }
 
-export default contextWrap(CollectionScreen);
+export default contextWrap(Collection);
 
 const styles = StyleSheet.create({
   gridView: {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from '../styles';
+import contextWrap from '../util/contextWrap';
 
-export default class FrogImage extends React.Component {
+class FrogImage extends React.Component {
   state = { currentDude: 0 };
   render() {
     const { currentDude } = this.state;
@@ -23,3 +24,5 @@ export default class FrogImage extends React.Component {
       : <ActivityIndicator size="large" color="#0000ff" />;
   }
 }
+
+export default contextWrap(FrogImage);
