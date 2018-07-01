@@ -1,49 +1,35 @@
 import React, { Component } from 'react';
-import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, AsyncStorage } from 'react-native';
-import { GlobalContext } from '../util/GlobalContext';
+import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch } from 'react-native';
+import contextWrap from '../util/contextWrap';
 
-export default class SettingsScreen extends Component {
+class SettingsScreen extends Component {
   static navigationOptions = {
     title: 'Settings',
   };
 
   state = {
+    godmode: false,
     listViewData: [
       {
-        key: 'onAlwaysWed', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle', enabled: false
+        key: 'toggleGodmode', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle'
       },
       {
-        key: 'onDudesClear', displayItems: ['Clear Dudes'], type: 'alert',
+        key: 'clearDudes', displayItems: ['Clear Dudes'], type: 'alert',
       },
     ],
   };
 
-  // async componentDidMount() {
-  //   const godmode = Boolean(await AsyncStorage.getItem('godmode'));
-  //   const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
-  //   this.state.listViewData[onAlwaysWedIdx].enabled = godmode;
-  //   this.forceUpdate();
-  // }
-
-  onAlwaysWed = async () => {
-    // Keep our listView modular
-    const onAlwaysWedIdx = this.state.listViewData.findIndex(d => d.key === 'onAlwaysWed');
-    this.state.listViewData[onAlwaysWedIdx].enabled = !this.state.listViewData[onAlwaysWedIdx].enabled;
-    // await AsyncStorage.setItem('godmode', JSON.stringify({ value: this.state.listViewData[onAlwaysWedIdx].enabled }));
-    this.setState(this.state);
-  }
-
-  onDudesClear = async () => {
-    // TODO: Call Alert Prompt
-    await AsyncStorage.removeItem('dudesCollection');
-    console.log('dudesClearPressed');
+  // Unsafe, deprecated, probably an anti-pattern
+  componentWillReceiveProps(nextProps) {
+    const { godmode } = nextProps.context;
+    this.setState({ godmode });
   }
 
   _renderItem = data => (
     <TouchableHighlight
       underlayColor="#dddddd"
       style={styles.rowTouchable}
-      onPress={this[data.item.key].bind(this)}
+      onPress={this.props.context[data.item.key]}
     >
       <View style={styles.row}>
         {data.item.displayItems.map((text, i) => (
@@ -52,14 +38,11 @@ export default class SettingsScreen extends Component {
           </View>
         ))}
         {data.item.type === 'toggle' &&
-          <GlobalContext.Consumer>
-            {context => (
-              <Switch
-                onValueChange={context.toggleGodmode}
-                value={context.godmode}
-              />)
+        <Switch
+          onValueChange={this.props.context.toggleGodmode}
+          value={this.state.godmode}
+        />
         }
-          </GlobalContext.Consumer>}
       </View>
     </TouchableHighlight>
   )
@@ -69,11 +52,13 @@ export default class SettingsScreen extends Component {
       <FlatList
         data={this.state.listViewData}
         renderItem={this._renderItem}
-        selected={this.state.listViewData[0].enabled}
+        extraData={this.state.godmode}
       />
     );
   }
 }
+
+export default contextWrap(SettingsScreen);
 
 const styles = StyleSheet.create({
   row: {

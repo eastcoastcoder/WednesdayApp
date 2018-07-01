@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
 import GridView from 'react-native-super-grid';
+import contextWrap from '../util/contextWrap';
 
-export default class CollectionScreen extends Component {
+class CollectionScreen extends Component {
   static navigationOptions = {
     title: 'Collection',
   };
 
   state = {
-    isLoading: true,
+    isLoading: this.props.context.isLoading,
+    dudesCollection: [],
   }
 
-  async componentDidMount() {
-    try {
-      const finalCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
-      this.setState({ finalCollection, isLoading: false });
-    } catch (err) {
-      return console.log(err);
-    }
+  componentWillReceiveProps(nextProps) {
+    const { isLoading, dudesCollection } = nextProps.context;
+    this.setState({ isLoading, dudesCollection });
   }
 
   render() {
-    return !this.state.isLoading
+    const { dudesCollection, isLoading } = this.state;
+    return !isLoading
       ?
         <GridView
           itemDimension={130}
-          items={this.state.finalCollection}
+          items={dudesCollection}
           style={styles.gridView}
           renderItem={({ thumbnail }) => (
             <View style={styles.itemContainer}>
@@ -36,6 +35,8 @@ export default class CollectionScreen extends Component {
       : <ActivityIndicator size="large" color="#0000ff" />;
   }
 }
+
+export default contextWrap(CollectionScreen);
 
 const styles = StyleSheet.create({
   gridView: {

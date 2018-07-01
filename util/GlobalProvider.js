@@ -21,31 +21,48 @@ export default class GlobalProvider extends Component {
       REEEEE: new Sound('REEEEE.m4a', Sound.MAIN_BUNDLE),
       todaysDudes: [], // integer
       isLoading: true,
+      dudesCollection: [],
     };
   }
 
   async componentDidMount() {
     const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.state.token}`;
+    const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
+    const dudesRepository = JSON.parse(await AsyncStorage.getItem('dudesRepository')) || [];
+    const todaysDudes = JSON.parse(await AsyncStorage.getItem('todaysDudes')) || [];
     return this.setState({
       notWednesdayDude: (await fetchJSON(notWedUrl)).data[0].images[0],
       isLoading: false,
+      dudesCollection,
+      dudesRepository,
+      todaysDudes,
     });
   }
 
+  // TODO: Call Alert Prompt
+  _clearDudes = async () => {
+    console.log('clearing dudes...');
+    await AsyncStorage.removeItem('dudesCollection');
+    await AsyncStorage.removeItem('dudesRepository');
+    this.setState({ dudesCollection: [] });
+  };
+
   fetchFroggos = async () => {
+    this.setState({ isLoading: true });
     let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${this.state.token}`;
     const { todaysDudes } = this.state;
     try {
-      let results = [];
+      let dudesRepository = [];
       while (url) {
         const response = await fetchJSON(url);
-        results = results.concat(response.data);
+        dudesRepository = dudesRepository.concat(response.data);
         url = response.paging.next;
       }
+      await AsyncStorage.setItem('dudesRepository', JSON.stringify(dudesRepository));
       for (let i = 0; i < 5; i++) {
-        const randomIndex = (Math.random() * results.length | 0);
+        const randomIndex = (Math.random() * dudesRepository.length | 0);
         // Implement categorization strats here
-        const loopDude = results[randomIndex];
+        const loopDude = dudesRepository[randomIndex];
         const { id } = loopDude;
         const { source } = loopDude.images[0];
         const thumbnail = findThumbnailDude(loopDude.images);
@@ -55,6 +72,7 @@ export default class GlobalProvider extends Component {
           thumbnail,
         });
       }
+      await AsyncStorage.setItem('todaysDudes', JSON.stringify(todaysDudes));
       const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
       const newDudes = [];
       for (const dude of todaysDudes) {
@@ -66,6 +84,8 @@ export default class GlobalProvider extends Component {
       await AsyncStorage.setItem('dudesCollection', JSON.stringify(finalResults));
       return this.setState({
         todaysDudes,
+        dudesCollection,
+        dudesRepository,
         isLoading: false,
       });
     } catch (err) {
@@ -73,29 +93,22 @@ export default class GlobalProvider extends Component {
     }
   }
 
+  _toggleGodmode = async () => {
+    console.log('toggling godmode');
+    const godmode = !this.state.godmode;
+    this.setState({ isLoading: true, godmode });
+    if (godmode && !this.state.dudesRepository.length) {
+      await this.fetchFroggos();
+    }
+    this.setState({ isLoading: false, isWednesday: !this.state.isWednesday });
+  };
+
   render() {
-    const { godmode, notWednesday, notWednesdayDude, isWednesday, REEEEE, todaysDudes, isLoading } = this.state;
     return (
       <GlobalContext.Provider value={{
-        isWednesday,
-        godmode,
-        notWednesday,
-        notWednesdayDude,
-        REEEEE,
-        todaysDudes,
-        isLoading,
-        getTodaysDudes: (incomingDudes) => {
-          this.setState({ todaysDudes: incomingDudes });
-        },
-        toggleGodmode: async () => {
-          const godmode = !this.state.godmode;
-          this.setState({ isLoading: true, godmode });
-          if (godmode) await this.fetchFroggos();
-          this.setState({ isLoading: false, godmode: true, isWednesday: !this.state.isWednesday });
-        },
-        consumeState: (state) => {
-          this.setState(state);
-        },
+        ...this.state,
+        toggleGodmode: async () => await this._toggleGodmode(),
+        clearDudes: async () => await this._clearDudes()
       }}
       >
         {this.props.children}
