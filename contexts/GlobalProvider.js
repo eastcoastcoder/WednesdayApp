@@ -29,36 +29,33 @@ export default class GlobalProvider extends Component {
     const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.state.token}`;
     const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
     const dudesRepository = JSON.parse(await AsyncStorage.getItem('dudesRepository')) || [];
+    const lastFetched = JSON.parse(await AsyncStorage.getItem('lastFetched')) || [];
     const todaysDudes = JSON.parse(await AsyncStorage.getItem('todaysDudes')) || [];
+    if (!dudesRepository.length) {
+      await this.cacheFroggos();
+    }
     return this.setState({
       notWednesdayDude: (await fetchJSON(notWedUrl)).data[0].images[0],
       isLoading: false,
       dudesCollection,
       dudesRepository,
       todaysDudes,
+      lastFetched,
     });
   }
 
   // TODO: Call Alert Prompt
   _clearDudes = async () => {
     console.log('clearing dudes...');
-    await AsyncStorage.removeItem('dudesCollection');
-    await AsyncStorage.removeItem('dudesRepository');
+    await AsyncStorage.multiRemove(['dudesCollection', 'dudesRepository']);
     this.setState({ dudesCollection: [] });
   };
 
   fetchFroggos = async () => {
     this.setState({ isLoading: true });
-    let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${this.state.token}`;
     const { todaysDudes } = this.state;
     try {
-      let dudesRepository = [];
-      while (url) {
-        const response = await fetchJSON(url);
-        dudesRepository = dudesRepository.concat(response.data);
-        url = response.paging.next;
-      }
-      await AsyncStorage.setItem('dudesRepository', JSON.stringify(dudesRepository));
+      const dudesRepository = await AsyncStorage.getItem('dudesRepository');
       for (let i = 0; i < 5; i++) {
         const randomIndex = (Math.random() * dudesRepository.length | 0);
         // Implement categorization strats here
@@ -73,6 +70,7 @@ export default class GlobalProvider extends Component {
         });
       }
       await AsyncStorage.setItem('todaysDudes', JSON.stringify(todaysDudes));
+      await AsyncStorage.setItem('lastFetched', JSON.stringify((new Date()).toLocaleDateString()));
       const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
       const newDudes = [];
       for (const dude of todaysDudes) {
@@ -85,7 +83,6 @@ export default class GlobalProvider extends Component {
       return this.setState({
         todaysDudes,
         dudesCollection,
-        dudesRepository,
         isLoading: false,
       });
     } catch (err) {
@@ -93,11 +90,24 @@ export default class GlobalProvider extends Component {
     }
   }
 
+  cacheFroggos = async () => {
+    let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${this.state.token}`;
+    let dudesRepository = [];
+    while (url) {
+      const response = await fetchJSON(url);
+      dudesRepository = dudesRepository.concat(response.data);
+      url = response.paging.next;
+    }
+    await AsyncStorage.setItem('dudesRepository', JSON.stringify(dudesRepository));
+  }
+
   _toggleGodmode = async () => {
     console.log('toggling godmode');
     const godmode = !this.state.godmode;
     this.setState({ isLoading: true, godmode });
-    if (godmode && !this.state.dudesRepository.length) {
+    const lastFetched = await AsyncStorage.getItem('lastFetched');
+    const curDate = (new Date()).toLocaleDateString();
+    if (godmode && (lastFetched !== curDate)) {
       await this.fetchFroggos();
     }
     this.setState({ isLoading: false, isWednesday: !this.state.isWednesday });

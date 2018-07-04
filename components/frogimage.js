@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from '../styles';
 import contextWrap from '../util/contextWrap';
+import FrogVideo from './FrogVideo';
 
 class FrogImage extends React.Component {
   state = { currentDude: 0 };
@@ -13,13 +14,15 @@ class FrogImage extends React.Component {
         <TouchableOpacity onPress={isWednesday
           ? () => {
             REEEEE.play();
-            return currentDude < 4
+            return currentDude < 5
               ? this.setState({ currentDude: currentDude + 1 })
               : this.setState({ currentDude: 0 });
             }
           : () => notWednesday.play()}
         >
-          <Image source={{ uri: isWednesday ? todaysDudes[Object.keys(todaysDudes)[currentDude]].source : notWednesdayDude.source }} style={styles.dude} />
+          {currentDude === 5
+            ? <FrogVideo />
+            : <Image source={{ uri: isWednesday ? todaysDudes[Object.keys(todaysDudes)[currentDude]].source : notWednesdayDude.source }} style={styles.dude} />}
         </TouchableOpacity>
       : <ActivityIndicator size="large" color="#0000ff" />;
   }

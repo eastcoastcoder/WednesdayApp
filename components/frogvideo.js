@@ -1,24 +1,16 @@
-// // import Expo, { Video } from 'expo';
-// import React from 'react';
-// import styles from '../styles';
+import React from 'react';
+import Video from 'react-native-video';
+import styles from '../styles';
 
-// const DittyFile = require('../assets/videos/ditty.mp4');
+const FrogVideo = () => (
+  <Video
+    source={require('../assets/videos/ditty.mp4')}
+    rate={1.0}
+    volume={1.0}
+    muted={false}
+    resizeMode="cover"
+    // repeat
+    style={styles.dudeVid}
+  />);
 
-// export default class FrogVideo extends React.Component {
-//   render() {
-//     return (
-//       <Video
-//         source={DittyFile}
-//         rate={1.0}
-//         volume={1.0}
-//         muted={false}
-//         resizeMode="cover"
-//         shouldPlay
-//         isLooping
-//         style={styles.dudeVid}
-//       />
-//     );
-//   }
-// }
-
-// // Expo.registerRootComponent(FrogVideo);
+export default FrogVideo;
