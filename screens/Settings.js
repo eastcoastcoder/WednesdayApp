@@ -25,27 +25,31 @@ class SettingsScreen extends Component {
     this.setState({ godmode });
   }
 
-  _renderItem = data => (
-    <TouchableHighlight
-      underlayColor="#dddddd"
-      style={styles.rowTouchable}
-      onPress={this.props.context[data.item.key]}
-    >
-      <View style={styles.row}>
-        {data.item.displayItems.map((text, i) => (
-          <View key={i} style={styles.column}>
-            <Text> {text} </Text>
-          </View>
+  _renderItem = data => {
+    const { isWednesday, toggleGodmode } = this.props.context;
+    const { godmode } = this.state;
+    return (
+      <TouchableHighlight
+        underlayColor="#dddddd"
+        style={styles.rowTouchable}
+        onPress={this.props.context[data.item.key]}
+      >
+        <View style={styles.row}>
+          {data.item.displayItems.map((text, i) => (
+            <View key={i} style={styles.column}>
+              <Text> {text} </Text>
+            </View>
         ))}
-        {data.item.type === 'toggle' &&
-        <Switch
-          onValueChange={this.props.context.toggleGodmode}
-          value={this.state.godmode}
-        />
+          {data.item.type === 'toggle' &&
+          <Switch
+            disabled={isWednesday}
+            onValueChange={toggleGodmode}
+            value={godmode}
+          />
         }
-      </View>
-    </TouchableHighlight>
-  )
+        </View>
+      </TouchableHighlight>);
+  };
 
   render() {
     return (

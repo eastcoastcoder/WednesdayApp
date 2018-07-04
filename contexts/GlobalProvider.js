@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   AsyncStorage,
+  Alert,
 } from 'react-native';
 import Sound from 'react-native-sound';
 import { APPID, APPSECRET } from 'react-native-dotenv';
@@ -34,6 +35,9 @@ export default class GlobalProvider extends Component {
     if (!dudesRepository.length) {
       await this.cacheFroggos();
     }
+    if (this.state.isWednesday) {
+      await this.fetchFroggos();
+    }
     return this.setState({
       notWednesdayDude: (await fetchJSON(notWedUrl)).data[0].images[0],
       isLoading: false,
@@ -44,18 +48,33 @@ export default class GlobalProvider extends Component {
     });
   }
 
-  // TODO: Call Alert Prompt
   _clearDudes = async () => {
-    console.log('clearing dudes...');
-    await AsyncStorage.multiRemove(['dudesCollection', 'dudesRepository']);
-    this.setState({ dudesCollection: [] });
+    Alert.alert(
+      'Clear Dudes',
+      'CAUTION: THIS WILL CLEAR ALL YOUR DUDES IN YOUR COLLECTION',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'OK',
+          onPress: async () => {
+            console.log('clearing dudes...');
+            await AsyncStorage.multiRemove([
+              'dudesCollection',
+              'dudesRepository',
+              'todaysDudes',
+              'lastFetched',
+            ]);
+            this.setState({ dudesCollection: [] });
+          } },
+      ],
+      { cancelable: false }
+    );
   };
 
   fetchFroggos = async () => {
     this.setState({ isLoading: true });
     const { todaysDudes } = this.state;
     try {
-      const dudesRepository = await AsyncStorage.getItem('dudesRepository');
+      const dudesRepository = JSON.parse(await AsyncStorage.getItem('dudesRepository')) || [];
       for (let i = 0; i < 5; i++) {
         const randomIndex = (Math.random() * dudesRepository.length | 0);
         // Implement categorization strats here
@@ -102,15 +121,17 @@ export default class GlobalProvider extends Component {
   }
 
   _toggleGodmode = async () => {
-    console.log('toggling godmode');
-    const godmode = !this.state.godmode;
-    this.setState({ isLoading: true, godmode });
-    const lastFetched = await AsyncStorage.getItem('lastFetched');
-    const curDate = (new Date()).toLocaleDateString();
-    if (godmode && (lastFetched !== curDate)) {
-      await this.fetchFroggos();
+    if (!this.state.isWednesday) {
+      console.log('toggling godmode');
+      const godmode = !this.state.godmode;
+      this.setState({ isLoading: true, godmode });
+      const lastFetched = await AsyncStorage.getItem('lastFetched');
+      const curDate = (new Date()).toLocaleDateString();
+      if (godmode && (lastFetched !== curDate)) {
+        await this.fetchFroggos();
+      }
+      this.setState({ isLoading: false, isWednesday: !this.state.isWednesday });
     }
-    this.setState({ isLoading: false, isWednesday: !this.state.isWednesday });
   };
 
   render() {
