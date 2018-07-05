@@ -9,6 +9,7 @@
     "react": "16.3.1",
     "react-native": "0.55",
     "react-native-dotenv": "^0.1.1",
+    "react-native-lightbox": "^0.7.0",
     "react-native-sound": "^0.10.9",
     "react-native-super-grid": "^2.1.0",
     "react-native-vector-icons": "^4.6.0",

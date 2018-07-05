@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
 import GridView from 'react-native-super-grid';
 import contextWrap from '../util/contextWrap';
+import Lightbox from 'react-native-lightbox';
 
 class Collection extends Component {
   static navigationOptions = {
@@ -27,9 +28,11 @@ class Collection extends Component {
           items={dudesCollection}
           style={styles.gridView}
           renderItem={({ thumbnail }) => (
-            <View style={styles.itemContainer}>
-              <Image source={{ uri: thumbnail }} style={styles.backgroundImage} />
-            </View>
+            <Lightbox>
+              <View style={styles.itemContainer}>
+                <Image source={{ uri: thumbnail }} style={styles.backgroundImage} />
+              </View>
+            </Lightbox>
         )}
         />
       : <ActivityIndicator size="large" color="#0000ff" />;

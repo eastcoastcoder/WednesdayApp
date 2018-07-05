@@ -32,10 +32,11 @@ export default class GlobalProvider extends Component {
     const dudesRepository = JSON.parse(await AsyncStorage.getItem('dudesRepository')) || [];
     const lastFetched = JSON.parse(await AsyncStorage.getItem('lastFetched')) || [];
     const todaysDudes = JSON.parse(await AsyncStorage.getItem('todaysDudes')) || [];
+    const curDate = (new Date()).toLocaleDateString();
     if (!dudesRepository.length) {
       await this.cacheFroggos();
     }
-    if (this.state.isWednesday) {
+    if (this.state.isWednesday && (lastFetched !== curDate)) {
       await this.fetchFroggos();
     }
     return this.setState({
