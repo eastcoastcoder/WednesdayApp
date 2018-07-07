@@ -16,6 +16,7 @@ export default class GlobalProvider extends Component {
     this.state = {
       token: `${APPID}|${APPSECRET}`,
       isWednesday: (new Date().getDay() === 3),
+      trueWednesday: (new Date().getDay() === 3),
       godmode: false,
       notWednesday: new Sound('NotWednesday.mp3', Sound.MAIN_BUNDLE),
       notWednesdayDude: {},
@@ -27,13 +28,16 @@ export default class GlobalProvider extends Component {
   }
 
   async componentDidMount() {
+    const allKeys = await AsyncStorage.getAllKeys();
+    const stores = await AsyncStorage.multiGet(allKeys);
+    const storageObj = {};
+    for (const store of stores) {
+      storageObj[store[0]] = JSON.parse(store[1]);
+    }
     const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.state.token}`;
-    const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
-    const dudesRepository = JSON.parse(await AsyncStorage.getItem('dudesRepository')) || [];
-    const lastFetched = JSON.parse(await AsyncStorage.getItem('lastFetched')) || [];
-    const todaysDudes = JSON.parse(await AsyncStorage.getItem('todaysDudes')) || [];
     const curDate = (new Date()).toLocaleDateString();
-    if (!dudesRepository.length) {
+    const { dudesRepository, lastFetched } = storageObj;
+    if (!dudesRepository || !dudesRepository.length) {
       await this.cacheFroggos();
     }
     if (this.state.isWednesday && (lastFetched !== curDate)) {
@@ -42,10 +46,7 @@ export default class GlobalProvider extends Component {
     return this.setState({
       notWednesdayDude: (await fetchJSON(notWedUrl)).data[0].images[0],
       isLoading: false,
-      dudesCollection,
-      dudesRepository,
-      todaysDudes,
-      lastFetched,
+      ...storageObj,
     });
   }
 
@@ -57,14 +58,10 @@ export default class GlobalProvider extends Component {
         { text: 'Cancel', style: 'cancel' },
         { text: 'OK',
           onPress: async () => {
-            console.log('clearing dudes...');
-            await AsyncStorage.multiRemove([
-              'dudesCollection',
-              'dudesRepository',
-              'todaysDudes',
-              'lastFetched',
-            ]);
-            this.setState({ dudesCollection: [] });
+            const allKeys = await AsyncStorage.getAllKeys();
+            await AsyncStorage.multiRemove(allKeys);
+            this.setState({ dudesCollection: [], godmode: false, isWednesday: this.state.trueWednesday });
+            await this.cacheFroggos();
           } },
       ],
       { cancelable: false }
@@ -122,10 +119,10 @@ export default class GlobalProvider extends Component {
   }
 
   _toggleGodmode = async () => {
-    if (!this.state.isWednesday) {
+    if (!this.state.trueWednesday) {
       console.log('toggling godmode');
       const godmode = !this.state.godmode;
-      this.setState({ isLoading: true, godmode });
+      this.setState({ godmode });
       const lastFetched = await AsyncStorage.getItem('lastFetched');
       const curDate = (new Date()).toLocaleDateString();
       if (godmode && (lastFetched !== curDate)) {

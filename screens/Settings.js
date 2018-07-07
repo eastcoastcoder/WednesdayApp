@@ -26,7 +26,8 @@ class SettingsScreen extends Component {
   }
 
   _renderItem = data => {
-    const { isWednesday, toggleGodmode } = this.props.context;
+    const trueWednesday = new Date().getDay() === 3;
+    const { toggleGodmode } = this.props.context;
     const { godmode } = this.state;
     return (
       <TouchableHighlight
@@ -42,7 +43,7 @@ class SettingsScreen extends Component {
         ))}
           {data.item.type === 'toggle' &&
           <Switch
-            disabled={isWednesday}
+            disabled={trueWednesday}
             onValueChange={toggleGodmode}
             value={godmode}
           />

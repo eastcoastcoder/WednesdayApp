@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Image, Text, Platform, AsyncStorage } from 'react-native';
 import GridView from 'react-native-super-grid';
-import contextWrap from '../util/contextWrap';
 import Lightbox from 'react-native-lightbox';
+import contextWrap from '../util/contextWrap';
 
 class Collection extends Component {
   static navigationOptions = {
@@ -10,18 +10,28 @@ class Collection extends Component {
   };
 
   state = {
-    isLoading: this.props.context.isLoading,
     dudesCollection: this.props.context.dudesCollection,
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isLoading, dudesCollection } = nextProps.context;
-    this.setState({ isLoading, dudesCollection });
+    const { dudesCollection } = nextProps.context;
+    this.setState({ dudesCollection });
+  }
+
+  // Hack until I figure out contexutal state issues
+  componentDidMount() {
+    this.props.navigation.addListener(
+      'didFocus',
+      async () => {
+        const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
+        this.setState({ dudesCollection });
+      }
+    );
   }
 
   render() {
-    const { dudesCollection, isLoading } = this.state;
-    return !isLoading
+    const { dudesCollection } = this.state;
+    return dudesCollection.length
       ?
         <GridView
           itemDimension={130}
@@ -35,7 +45,10 @@ class Collection extends Component {
             </Lightbox>
         )}
         />
-      : <ActivityIndicator size="large" color="#0000ff" />;
+      :
+        <View style={styles.tabBarInfoContainer}>
+          <Text style={styles.tabBarInfoText}>No Frogs to see here just yet.</Text>
+        </View>;
   }
 }
 
@@ -51,6 +64,31 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     height: 150,
+  },
+  tabBarInfoContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: { height: -3 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 20,
+      },
+    }),
+    alignItems: 'center',
+    backgroundColor: '#fbfbfb',
+    paddingVertical: 20,
+  },
+  tabBarInfoText: {
+    fontSize: 17,
+    color: 'rgba(96,100,109, 1)',
+    textAlign: 'center',
   },
   backgroundImage: {
     flex: 1,

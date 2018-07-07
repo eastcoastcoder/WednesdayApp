@@ -11,7 +11,8 @@ class FrogImage extends React.Component {
     const { REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.props.context;
     return !isLoading
       ?
-        <TouchableOpacity onPress={isWednesday
+        <TouchableOpacity onPress={
+          isWednesday
           ? () => {
             REEEEE.play();
             return currentDude < 5
