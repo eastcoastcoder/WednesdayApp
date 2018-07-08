@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch } from 'react-native';
+import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, Alert, AsyncStorage } from 'react-native';
 import contextWrap from '../util/contextWrap';
 
 class SettingsScreen extends Component {
@@ -11,6 +11,8 @@ class SettingsScreen extends Component {
     godmode: this.props.context.godmode,
     listViewData: [],
   }
+
+  trueWednesday = (new Date().getDay() === 3);
 
   static getDerivedStateFromProps(nextProps) {
     return {
@@ -26,15 +28,28 @@ class SettingsScreen extends Component {
     };
   }
 
+  toggleGodmode = async () => this.props.context.toggleGodmode();
+
+  clearDudes = async () => {
+    Alert.alert(
+      'Clear Dudes',
+      'CAUTION: THIS WILL CLEAR ALL YOUR DUDES IN YOUR COLLECTION',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'OK', onPress: this.props.context.clearDudesData },
+      ],
+      { cancelable: false }
+    );
+  };
+
   _renderItem = data => {
-    const trueWednesday = new Date().getDay() === 3;
     const { toggleGodmode } = this.props.context;
     const { godmode } = this.state;
     return (
       <TouchableHighlight
         underlayColor="#dddddd"
         style={styles.rowTouchable}
-        onPress={this.props.context[data.item.key]}
+        onPress={async () => this[data.item.key]()}
       >
         <View style={styles.row}>
           {data.item.displayItems.map((text, i) => (
@@ -44,7 +59,7 @@ class SettingsScreen extends Component {
         ))}
           {data.item.type === 'toggle' &&
           <Switch
-            disabled={trueWednesday}
+            disabled={this.trueWednesday}
             onValueChange={toggleGodmode}
             value={godmode}
           />

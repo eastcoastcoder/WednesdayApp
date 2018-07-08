@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   AsyncStorage,
-  Alert,
 } from 'react-native';
 import Sound from 'react-native-sound';
 import { APPID, APPSECRET } from 'react-native-dotenv';
@@ -13,31 +12,40 @@ export default class GlobalProvider extends Component {
     super(props);
 
     Sound.setCategory('Playback', true);
-    this.state = {
-      token: `${APPID}|${APPSECRET}`,
+    this.state = this.initialState;
+    this.token = `${APPID}|${APPSECRET}`;
+    this.trueWednesday = (new Date().getDay() === 3);
+    this.curDate = (new Date()).toLocaleDateString();
+  }
+
+  get initialState() {
+    return {
+      isLoading: true,
       isWednesday: (new Date().getDay() === 3),
-      trueWednesday: (new Date().getDay() === 3),
       godmode: false,
       notWednesday: new Sound('NotWednesday.mp3', Sound.MAIN_BUNDLE),
-      notWednesdayDude: {},
       REEEEE: new Sound('REEEEE.m4a', Sound.MAIN_BUNDLE),
-      todaysDudes: [], // integer
-      isLoading: true,
+      notWednesdayDude: {},
+      todaysDudes: [],
       dudesCollection: [],
+      lastFetched: '',
     };
   }
 
   async componentDidMount() {
+    await this.initialize();
+  }
+
+  initialize = async () => {
     const allKeys = await AsyncStorage.getAllKeys();
     const stores = await AsyncStorage.multiGet(allKeys);
     const storageObj = {};
     for (const store of stores) {
       storageObj[store[0]] = JSON.parse(store[1]);
     }
-    const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.state.token}`;
-    const curDate = (new Date()).toLocaleDateString();
+    const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.token}`;
     const { lastFetched } = storageObj;
-    if (this.state.isWednesday && (lastFetched !== curDate)) {
+    if (this.state.isWednesday && (lastFetched !== this.curDate)) {
       await this.fetchFroggos();
     }
     return this.setState({
@@ -47,22 +55,15 @@ export default class GlobalProvider extends Component {
     });
   }
 
-  _clearDudes = async () => {
-    Alert.alert(
-      'Clear Dudes',
-      'CAUTION: THIS WILL CLEAR ALL YOUR DUDES IN YOUR COLLECTION',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK',
-          onPress: async () => {
-            const allKeys = await AsyncStorage.getAllKeys();
-            await AsyncStorage.multiRemove(allKeys);
-            this.setState({ dudesCollection: [], todaysDudes: [], godmode: false, isWednesday: this.state.trueWednesday });
-            await this.fetchFroggos();
-          } },
-      ],
-      { cancelable: false }
-    );
+  clearState = async () => {
+    this.setState(this.initialState);
+    await this.initialize();
+  }
+
+  clearDudesData = async () => {
+    const allKeys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(allKeys);
+    await this.clearState();
   };
 
   fetchFroggos = async () => {
@@ -84,19 +85,20 @@ export default class GlobalProvider extends Component {
         });
       }
       await AsyncStorage.setItem('todaysDudes', JSON.stringify(todaysDudes));
-      await AsyncStorage.setItem('lastFetched', JSON.stringify((new Date()).toLocaleDateString()));
-      const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
+      const lastFetched = (new Date()).toLocaleDateString();
+      await AsyncStorage.setItem('lastFetched', JSON.stringify(lastFetched));
       const newDudes = [];
       for (const dude of todaysDudes) {
-        if (!dudesCollection.includes(dude)) {
+        if (!this.state.dudesCollection.includes(dude)) {
           newDudes.push(dude);
         }
       }
-      const finalResults = dudesCollection.concat(newDudes);
+      const finalResults = this.state.dudesCollection.concat(newDudes);
       await AsyncStorage.setItem('dudesCollection', JSON.stringify(finalResults));
       return this.setState({
         todaysDudes,
-        dudesCollection,
+        dudesCollection: finalResults,
+        lastFetched,
         isLoading: false,
       });
     } catch (err) {
@@ -105,7 +107,7 @@ export default class GlobalProvider extends Component {
   }
 
   cacheFroggos = async () => {
-    let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${this.state.token}`;
+    let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${this.token}`;
     let dudesRepository = [];
     while (url) {
       const response = await fetchJSON(url);
@@ -116,14 +118,12 @@ export default class GlobalProvider extends Component {
     await AsyncStorage.setItem('dudesRepository', JSON.stringify(dudesRepository));
   }
 
-  _toggleGodmode = async () => {
-    if (!this.state.trueWednesday) {
+  toggleGodmode = async () => {
+    if (!this.trueWednesday) {
       console.log('toggling godmode');
       const godmode = !this.state.godmode;
       this.setState({ godmode, isLoading: true });
-      const lastFetched = await AsyncStorage.getItem('lastFetched');
-      const curDate = (new Date()).toLocaleDateString();
-      if (godmode && (lastFetched !== curDate)) {
+      if (godmode && (this.state.lastFetched !== this.curDate)) {
         await this.fetchFroggos();
       }
       this.setState({ isLoading: false, isWednesday: !this.state.isWednesday });
@@ -134,8 +134,9 @@ export default class GlobalProvider extends Component {
     return (
       <GlobalContext.Provider value={{
         ...this.state,
-        toggleGodmode: async () => await this._toggleGodmode(),
-        clearDudes: async () => await this._clearDudes()
+        clearState: () => this.clearState(),
+        toggleGodmode: this.toggleGodmode,
+        clearDudesData: this.clearDudesData,
       }}
       >
         {this.props.children}
