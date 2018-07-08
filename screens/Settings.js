@@ -8,21 +8,22 @@ class SettingsScreen extends Component {
   };
 
   state = {
-    godmode: false,
-    listViewData: [
-      {
-        key: 'toggleGodmode', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle'
-      },
-      {
-        key: 'clearDudes', displayItems: ['Clear Dudes'], type: 'alert',
-      },
-    ],
-  };
+    godmode: this.props.context.godmode,
+    listViewData: [],
+  }
 
-  // Unsafe, deprecated, probably an anti-pattern
-  componentWillReceiveProps(nextProps) {
-    const { godmode } = nextProps.context;
-    this.setState({ godmode });
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      godmode: nextProps.context.godmode,
+      listViewData: [
+        {
+          key: 'toggleGodmode', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle'
+        },
+        {
+          key: 'clearDudes', displayItems: ['Clear Dudes'], type: 'alert',
+        },
+      ],
+    };
   }
 
   _renderItem = data => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Platform, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Image, Text, Platform, ActivityIndicator } from 'react-native';
 import GridView from 'react-native-super-grid';
 import Lightbox from 'react-native-lightbox';
 import contextWrap from '../util/contextWrap';
@@ -11,44 +11,38 @@ class Collection extends Component {
 
   state = {
     dudesCollection: this.props.context.dudesCollection,
+    isLoading: this.props.context.isLoading,
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { dudesCollection } = nextProps.context;
-    this.setState({ dudesCollection });
-  }
-
-  // Hack until I figure out contexutal state issues
-  componentDidMount() {
-    this.props.navigation.addListener(
-      'didFocus',
-      async () => {
-        const dudesCollection = JSON.parse(await AsyncStorage.getItem('dudesCollection')) || [];
-        this.setState({ dudesCollection });
-      }
-    );
+  static getDerivedStateFromProps({ context: { dudesCollection, isLoading } }) {
+    return {
+      dudesCollection,
+      isLoading,
+    };
   }
 
   render() {
-    const { dudesCollection } = this.state;
-    return dudesCollection.length
-      ?
-        <GridView
-          itemDimension={130}
-          items={dudesCollection}
-          style={styles.gridView}
-          renderItem={({ thumbnail }) => (
-            <Lightbox>
-              <View style={styles.itemContainer}>
-                <Image source={{ uri: thumbnail }} style={styles.backgroundImage} />
-              </View>
-            </Lightbox>
+    const { dudesCollection, isLoading } = this.state;
+    return !isLoading
+      ? dudesCollection.length
+        ?
+          <GridView
+            itemDimension={130}
+            items={dudesCollection}
+            style={styles.gridView}
+            renderItem={({ thumbnail }) => (
+              <Lightbox>
+                <View style={styles.itemContainer}>
+                  <Image source={{ uri: thumbnail }} style={styles.backgroundImage} />
+                </View>
+              </Lightbox>
         )}
-        />
-      :
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>No Frogs to see here just yet.</Text>
-        </View>;
+          />
+        :
+          <View style={styles.tabBarInfoContainer}>
+            <Text style={styles.tabBarInfoText}>No Frogs to see here just yet.</Text>
+          </View>
+      : <ActivityIndicator size="large" color="#0000ff" />;
   }
 }
 

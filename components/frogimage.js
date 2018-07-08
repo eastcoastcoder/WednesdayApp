@@ -5,10 +5,24 @@ import contextWrap from '../util/contextWrap';
 import FrogVideo from './FrogVideo';
 
 class FrogImage extends React.Component {
-  state = { currentDude: 0 };
+  state = {
+    currentDude: 0,
+  };
+
+  static getDerivedStateFromProps({ context: { REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } }, prevState) {
+    return {
+      currentDude: prevState.currentDude,
+      REEEEE,
+      notWednesday,
+      notWednesdayDude,
+      isWednesday,
+      todaysDudes,
+      isLoading,
+    };
+  }
+
   render() {
-    const { currentDude } = this.state;
-    const { REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.props.context;
+    const { currentDude, REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.state;
     return !isLoading
       ?
         <TouchableOpacity onPress={

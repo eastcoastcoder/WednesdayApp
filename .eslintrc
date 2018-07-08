@@ -47,6 +47,7 @@
     "no-prototype-builtins": "off",
     "no-bitwise": "off",        
     "no-console": "off",    
+    "no-nested-ternary": "off",
     "no-underscore-dangle": "off",    
     "object-curly-newline": "off",    
     "no-use-before-define": "off",

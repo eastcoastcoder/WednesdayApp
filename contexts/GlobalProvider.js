@@ -36,10 +36,7 @@ export default class GlobalProvider extends Component {
     }
     const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.state.token}`;
     const curDate = (new Date()).toLocaleDateString();
-    const { dudesRepository, lastFetched } = storageObj;
-    if (!dudesRepository || !dudesRepository.length) {
-      await this.cacheFroggos();
-    }
+    const { lastFetched } = storageObj;
     if (this.state.isWednesday && (lastFetched !== curDate)) {
       await this.fetchFroggos();
     }
@@ -60,8 +57,8 @@ export default class GlobalProvider extends Component {
           onPress: async () => {
             const allKeys = await AsyncStorage.getAllKeys();
             await AsyncStorage.multiRemove(allKeys);
-            this.setState({ dudesCollection: [], godmode: false, isWednesday: this.state.trueWednesday });
-            await this.cacheFroggos();
+            this.setState({ dudesCollection: [], todaysDudes: [], godmode: false, isWednesday: this.state.trueWednesday });
+            await this.fetchFroggos();
           } },
       ],
       { cancelable: false }
@@ -72,11 +69,11 @@ export default class GlobalProvider extends Component {
     this.setState({ isLoading: true });
     const { todaysDudes } = this.state;
     try {
-      const dudesRepository = JSON.parse(await AsyncStorage.getItem('dudesRepository')) || [];
+      if (!this.state.dudesRepository) await this.cacheFroggos();
       for (let i = 0; i < 5; i++) {
-        const randomIndex = (Math.random() * dudesRepository.length | 0);
+        const randomIndex = (Math.random() * this.state.dudesRepository.length | 0);
         // Implement categorization strats here
-        const loopDude = dudesRepository[randomIndex];
+        const loopDude = this.state.dudesRepository[randomIndex];
         const { id } = loopDude;
         const { source } = loopDude.images[0];
         const thumbnail = findThumbnailDude(loopDude.images);
@@ -115,6 +112,7 @@ export default class GlobalProvider extends Component {
       dudesRepository = dudesRepository.concat(response.data);
       url = response.paging.next;
     }
+    this.setState({ dudesRepository });
     await AsyncStorage.setItem('dudesRepository', JSON.stringify(dudesRepository));
   }
 
@@ -122,7 +120,7 @@ export default class GlobalProvider extends Component {
     if (!this.state.trueWednesday) {
       console.log('toggling godmode');
       const godmode = !this.state.godmode;
-      this.setState({ godmode });
+      this.setState({ godmode, isLoading: true });
       const lastFetched = await AsyncStorage.getItem('lastFetched');
       const curDate = (new Date()).toLocaleDateString();
       if (godmode && (lastFetched !== curDate)) {
