@@ -1,0 +1,3 @@
+[submodule "screens/Egg/FlappyFrog"]
+	path = screens/Egg/FlappyFrog
+	url = git@github.com:ethanx94/FlappyBird-ReactNative-Context.git

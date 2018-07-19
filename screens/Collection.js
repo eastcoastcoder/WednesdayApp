@@ -10,11 +10,11 @@ class Collection extends Component {
   };
 
   state = {
-    dudesCollection: this.props.context.dudesCollection,
-    isLoading: this.props.context.isLoading,
+    dudesCollection: this.props.dudesCollection,
+    isLoading: this.props.isLoading,
   }
 
-  static getDerivedStateFromProps({ context: { dudesCollection, isLoading } }) {
+  static getDerivedStateFromProps({ dudesCollection, isLoading }) {
     return {
       dudesCollection,
       isLoading,

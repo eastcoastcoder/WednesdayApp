@@ -6,7 +6,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 import Dude from '../screens/Dude';
 import Collection from '../screens/Collection';
-import Egg from '../screens/Egg';
+import Egg from './EggNavigator';
 import Settings from '../screens/Settings';
 
 export default TabNavigator(

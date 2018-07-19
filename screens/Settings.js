@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, Alert, AsyncStorage } from 'react-native';
+import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, Alert } from 'react-native';
 import contextWrap from '../util/contextWrap';
 
 class SettingsScreen extends Component {
@@ -8,7 +8,7 @@ class SettingsScreen extends Component {
   };
 
   state = {
-    godmode: this.props.context.godmode,
+    godmode: this.props.godmode,
     listViewData: [],
   }
 
@@ -16,7 +16,7 @@ class SettingsScreen extends Component {
 
   static getDerivedStateFromProps(nextProps) {
     return {
-      godmode: nextProps.context.godmode,
+      godmode: nextProps.godmode,
       listViewData: [
         {
           key: 'toggleGodmode', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle'
@@ -28,7 +28,7 @@ class SettingsScreen extends Component {
     };
   }
 
-  toggleGodmode = async () => this.props.context.toggleGodmode();
+  toggleGodmode = async () => this.props.toggleGodmode();
 
   clearDudes = async () => {
     Alert.alert(
@@ -36,14 +36,14 @@ class SettingsScreen extends Component {
       'CAUTION: THIS WILL CLEAR ALL YOUR DUDES IN YOUR COLLECTION',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: this.props.context.clearDudesData },
+        { text: 'OK', onPress: this.props.clearDudesData },
       ],
       { cancelable: false }
     );
   };
 
   _renderItem = data => {
-    const { toggleGodmode } = this.props.context;
+    const { toggleGodmode } = this.props;
     const { godmode } = this.state;
     return (
       <TouchableHighlight

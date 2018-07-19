@@ -7,7 +7,7 @@ export default function contextWrap(InputComponent) {
       return (
         <GlobalContext.Consumer>
           {context => (
-            <InputComponent {...this.props} context={context} />)}
+            <InputComponent {...this.props} {...context} />)}
         </GlobalContext.Consumer>
       );
     }

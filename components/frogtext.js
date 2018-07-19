@@ -16,7 +16,7 @@ class FrogText extends React.Component {
         hitCount: '!'
       });
     }
-    if (this.props.context.isWednesday) {
+    if (this.props.isWednesday) {
       this.state.wednesday.play();
       return this.setState({
         hitCount: `${this.state.hitCount}!`
@@ -28,7 +28,7 @@ class FrogText extends React.Component {
     return (
       <TouchableOpacity>
         <Text onPress={this.handlePress} style={styles.paragraph}>
-          {this.props.context.isWednesday
+          {this.props.isWednesday
             ? `It is Wednesday my Dudes${this.state.hitCount}`
             : 'It is not Wednesday my Dudes...\nTune in next week!'}
         </Text>

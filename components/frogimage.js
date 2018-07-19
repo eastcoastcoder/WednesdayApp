@@ -9,7 +9,7 @@ class FrogImage extends React.Component {
     currentDude: 0,
   };
 
-  static getDerivedStateFromProps({ context: { REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } }, prevState) {
+  static getDerivedStateFromProps({ REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading }, prevState) {
     return {
       currentDude: prevState.currentDude,
       REEEEE,
