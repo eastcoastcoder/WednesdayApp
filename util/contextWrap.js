@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+
 import { GlobalContext } from '../contexts/GlobalContext';
 
 export default function contextWrap(InputComponent) {
-  return class extends Component {
-    render() {
-      return (
-        <GlobalContext.Consumer>
-          {context => (
-            <InputComponent {...this.props} {...context} />)}
-        </GlobalContext.Consumer>
-      );
-    }
-  };
+  const WrappedComponent = (props) => (
+    <GlobalContext.Consumer>
+      {context => (
+        <InputComponent {...props} {...context} />)}
+    </GlobalContext.Consumer>
+  );
+  return hoistNonReactStatic(WrappedComponent, InputComponent);
 }

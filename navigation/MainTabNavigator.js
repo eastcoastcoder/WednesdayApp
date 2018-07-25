@@ -13,6 +13,9 @@ export default TabNavigator(
   {
     Dude: {
       screen: Dude,
+      navigationOptions: {
+        title: 'Dude',
+      },
     },
     Collection: {
       screen: Collection,
