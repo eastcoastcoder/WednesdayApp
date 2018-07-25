@@ -8,6 +8,7 @@ import Dude from '../screens/Dude';
 import Collection from '../screens/Collection';
 import Egg from './EggNavigator';
 import Settings from '../screens/Settings';
+import Achievements from '../screens/Achievements';
 
 export default TabNavigator(
   {
@@ -22,6 +23,9 @@ export default TabNavigator(
     },
     Egg: {
       screen: Egg,
+    },
+    Achievements: {
+      screen: Achievements,
     },
     Settings: {
       screen: Settings,
@@ -45,8 +49,14 @@ export default TabNavigator(
           case 'Egg':
             iconName =
               Platform.OS === 'ios'
-                ? `ios-information-circle${focused ? '' : '-outline'}`
-                : 'md-information-circle';
+                ? `ios-egg${focused ? '' : '-outline'}`
+                : 'md-egg';
+            break;
+          case 'Achievements':
+            iconName =
+                Platform.OS === 'ios'
+                  ? `ios-star${focused ? '' : '-outline'}`
+                  : 'md-star';
             break;
           case 'Settings':
             iconName =

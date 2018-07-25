@@ -1,5 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import Sound from 'react-native-sound';
 import styles from '../styles';
 import contextWrap from '../util/contextWrap';
@@ -10,8 +13,12 @@ class FrogText extends React.Component {
     wednesday: new Sound('Wednesday.m4a', Sound.MAIN_BUNDLE),
   };
 
-  handlePress = () => {
+  handlePress = async () => {
     if (this.state.hitCount === '!!!!!') {
+      const isUnlocked = Boolean(this.props.userAchievements.filter(d => d.key === '001').length);
+      if (!isUnlocked) {
+        this.props.unlockAchievement('001');
+      }
       return this.setState({
         hitCount: '!'
       });

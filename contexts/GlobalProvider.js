@@ -29,6 +29,7 @@ export default class GlobalProvider extends Component {
       todaysDudes: [],
       dudesCollection: [],
       lastFetched: '',
+      userAchievements: [],
     };
   }
 
@@ -130,13 +131,30 @@ export default class GlobalProvider extends Component {
     }
   };
 
+  unlockAchievement = async (achievementId) => {
+    const achievementObj = {
+      key: achievementId,
+    };
+    switch (achievementId) {
+      case '001':
+        achievementObj.displayItems = ['Unlocked Diddy'];
+        break;
+      default:
+        break;
+    }
+    const userAchievements = [].concat(this.state.userAchievements);
+    userAchievements.push(achievementObj);
+    this.setState({ userAchievements });
+    await AsyncStorage.setItem('userAchievements', JSON.stringify(userAchievements));
+  };
+
   render() {
     return (
       <GlobalContext.Provider value={{
         ...this.state,
-        clearState: () => this.clearState(),
         toggleGodmode: this.toggleGodmode,
         clearDudesData: this.clearDudesData,
+        unlockAchievement: this.unlockAchievement,
       }}
       >
         {this.props.children}
