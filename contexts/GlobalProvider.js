@@ -25,11 +25,13 @@ export default class GlobalProvider extends Component {
       godmode: false,
       notWednesday: new Sound('NotWednesday.mp3', Sound.MAIN_BUNDLE),
       REEEEE: new Sound('REEEEE.m4a', Sound.MAIN_BUNDLE),
+      wednesday: new Sound('Wednesday.m4a', Sound.MAIN_BUNDLE),
       notWednesdayDude: {},
       todaysDudes: [],
       dudesCollection: [],
       lastFetched: '',
       userAchievements: [],
+      hitCount: 0,
     };
   }
 
@@ -59,6 +61,15 @@ export default class GlobalProvider extends Component {
   clearState = async () => {
     this.setState(this.initialState);
     await this.initialize();
+  }
+
+  incrementHitCount = async () => {
+    const { hitCount } = this.state;
+    this.setState({ hitCount: hitCount + 1 });
+  }
+
+  resetHitCount = async () => {
+    this.setState({ hitCount: 0 });
   }
 
   clearDudesData = async () => {
@@ -155,6 +166,8 @@ export default class GlobalProvider extends Component {
         toggleGodmode: this.toggleGodmode,
         clearDudesData: this.clearDudesData,
         unlockAchievement: this.unlockAchievement,
+        incrementHitCount: this.incrementHitCount,
+        resetHitCount: this.resetHitCount,
       }}
       >
         {this.props.children}

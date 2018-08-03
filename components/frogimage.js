@@ -9,7 +9,7 @@ class FrogImage extends React.Component {
     currentDude: 0,
   };
 
-  static getDerivedStateFromProps({ REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading }, prevState) {
+  static getDerivedStateFromProps({ REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading, hitCount }, prevState) {
     return {
       currentDude: prevState.currentDude,
       REEEEE,
@@ -18,11 +18,12 @@ class FrogImage extends React.Component {
       isWednesday,
       todaysDudes,
       isLoading,
+      hitCount,
     };
   }
 
   render() {
-    const { currentDude, REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.state;
+    const { currentDude, hitCount, REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.state;
     return !isLoading
       ?
         <TouchableOpacity onPress={
@@ -30,12 +31,12 @@ class FrogImage extends React.Component {
           ? () => {
             REEEEE.play();
             return currentDude < 5
-              ? this.setState({ currentDude: currentDude + 1 })
+              ? this.setState({ currentDude: hitCount !== 5 ? currentDude + 1 : currentDude }) // Disallow dude rotation on FrogVideo state
               : this.setState({ currentDude: 0 });
             }
           : () => notWednesday.play()}
         >
-          {currentDude === 5
+          {hitCount === 5
             ? <FrogVideo />
             : <Image source={{ uri: isWednesday ? todaysDudes[Object.keys(todaysDudes)[currentDude]].source : notWednesdayDude.source }} style={styles.dude} />}
         </TouchableOpacity>

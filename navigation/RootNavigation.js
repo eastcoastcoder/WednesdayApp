@@ -2,6 +2,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import ErrorBoundry from '../util/ErrorBoundry';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -20,6 +21,10 @@ const RootStackNavigator = StackNavigator(
 
 export default class RootNavigator extends React.Component {
   render() {
-    return <RootStackNavigator />;
+    return (
+      <ErrorBoundry>
+        <RootStackNavigator />
+      </ErrorBoundry>
+    );
   }
 }
