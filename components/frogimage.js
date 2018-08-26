@@ -9,36 +9,39 @@ class FrogImage extends React.Component {
     currentDude: 0,
   };
 
-  static getDerivedStateFromProps({ REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading, hitCount }, prevState) {
-    return {
-      currentDude: prevState.currentDude,
-      REEEEE,
-      notWednesday,
-      notWednesdayDude,
-      isWednesday,
-      todaysDudes,
-      isLoading,
-      hitCount,
-    };
-  }
-
   render() {
-    const { currentDude, hitCount, REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.state;
-    return !isLoading
+    const VIDEO_MODE = Boolean(this.props.hitCount === 5);
+    const { currentDude } = this.state;
+    const { hitCount, REEEEE, notWednesday, notWednesdayDude, isWednesday, todaysDudes, isLoading } = this.props;
+    return (!isLoading)
       ?
-        <TouchableOpacity onPress={
-          isWednesday
-          ? () => {
-            REEEEE.play();
-            return currentDude < 5
-              ? this.setState({ currentDude: hitCount !== 5 ? currentDude + 1 : currentDude }) // Disallow dude rotation on FrogVideo state
-              : this.setState({ currentDude: 0 });
-            }
-          : () => notWednesday.play()}
+        <TouchableOpacity
+          onPress={
+          (isWednesday)
+            ? () => {
+              REEEEE.play();
+              return (currentDude < 5)
+                ? this.setState({
+                  currentDude:
+                    (VIDEO_MODE)
+                      ? currentDude
+                      : currentDude + 1 })
+                : this.setState({ currentDude: 0 });
+              }
+            : () => notWednesday.play()}
         >
           {hitCount === 5
             ? <FrogVideo />
-            : <Image source={{ uri: isWednesday ? todaysDudes[Object.keys(todaysDudes)[currentDude]].source : notWednesdayDude.source }} style={styles.dude} />}
+            : <Image
+              source={{
+              uri:
+              (isWednesday)
+              ? currentDude < 5
+                ? todaysDudes[currentDude].source
+                : todaysDudes[0].source
+              : notWednesdayDude.source }}
+              style={styles.dude}
+            />}
         </TouchableOpacity>
       : <ActivityIndicator size="large" color="#0000ff" />;
   }

@@ -9,20 +9,8 @@ class Collection extends Component {
     title: 'Collection',
   };
 
-  state = {
-    dudesCollection: this.props.dudesCollection,
-    isLoading: this.props.isLoading,
-  }
-
-  static getDerivedStateFromProps({ dudesCollection, isLoading }) {
-    return {
-      dudesCollection,
-      isLoading,
-    };
-  }
-
   render() {
-    const { dudesCollection, isLoading } = this.state;
+    const { dudesCollection, isLoading } = this.props;
     return !isLoading
       ? dudesCollection.length
         ?

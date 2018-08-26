@@ -7,18 +7,8 @@ import styles from '../styles';
 import contextWrap from '../util/contextWrap';
 
 class FrogText extends React.Component {
-  static getDerivedStateFromProps({ hitCount, wednesday, incrementHitCount, resetHitCount }) {
-    return {
-      hitCount,
-      wednesday,
-      incrementHitCount,
-      resetHitCount,
-    };
-  }
-
   handlePress = async () => {
-    const { hitCount, wednesday } = this.state;
-    const { isWednesday, unlockAchievement, userAchievements, incrementHitCount, resetHitCount } = this.props;
+    const { isWednesday, unlockAchievement, userAchievements, incrementHitCount, resetHitCount, hitCount, wednesday } = this.props;
     if (hitCount === 5) {
       const isUnlocked = Boolean(userAchievements.filter(d => d.key === '001').length);
       if (!isUnlocked) {
@@ -33,8 +23,7 @@ class FrogText extends React.Component {
   }
 
   render() {
-    const { hitCount } = this.state;
-    const { isWednesday } = this.props;
+    const { isWednesday, hitCount } = this.props;
     const hitCountDisplay = '!'.repeat(hitCount);
     return (
       <TouchableOpacity>

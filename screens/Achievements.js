@@ -13,16 +13,6 @@ class AchievementsScreen extends Component {
     title: 'Achievements',
   };
 
-  state = {
-    listViewData: [],
-  };
-
-  static getDerivedStateFromProps(nextProps) {
-    return {
-      listViewData: nextProps.userAchievements,
-    };
-  }
-
   '001' = () => {
     console.log('Nothing Yet');
   }
@@ -45,9 +35,8 @@ class AchievementsScreen extends Component {
   render() {
     return (
       <FlatList
-        data={this.state.listViewData}
+        data={this.props.userAchievements}
         renderItem={this._renderItem}
-        extraData={this.state.godmode}
       />
     );
   }
