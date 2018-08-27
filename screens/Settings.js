@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, Alert } from 'react-native';
+import { FlatList, TouchableHighlight, View, StyleSheet, Text, Switch, Alert, ActivityIndicator } from 'react-native';
 import contextWrap from '../util/contextWrap';
 
 class SettingsScreen extends Component {
@@ -8,27 +8,27 @@ class SettingsScreen extends Component {
   };
 
   state = {
-    godmode: this.props.godmode,
-    listViewData: [],
-  }
+    disabled: Boolean(this.trueWednesday),
+  };
 
   trueWednesday = (new Date().getDay() === 3);
 
-  static getDerivedStateFromProps(nextProps) {
-    return {
-      godmode: nextProps.godmode,
-      listViewData: [
-        {
-          key: 'toggleGodmode', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle'
-        },
-        {
-          key: 'clearDudes', displayItems: ['Clear Dudes'], type: 'alert',
-        },
-      ],
-    };
-  }
+  listViewData = [
+    {
+      key: 'toggleGodmodeSwitch', displayItems: ['It\'s Always Wednesday in Philadelphia'], type: 'toggle'
+    },
+    {
+      key: 'clearDudes', displayItems: ['Clear Dudes'], type: 'alert',
+    },
+  ];
 
-  toggleGodmode = async () => this.props.toggleGodmode();
+  toggleGodmodeSwitch = async () => {
+    const { toggleGodmode } = this.props;
+    const { disabled } = this.state;
+    if (!disabled) {
+      await toggleGodmode();
+    }
+  };
 
   clearDudes = async () => {
     Alert.alert(
@@ -38,13 +38,12 @@ class SettingsScreen extends Component {
         { text: 'Cancel', style: 'cancel' },
         { text: 'OK', onPress: this.props.clearDudesData },
       ],
-      { cancelable: false }
     );
   };
 
   _renderItem = data => {
-    const { toggleGodmode } = this.props;
-    const { godmode } = this.state;
+    const { godmode } = this.props;
+    const { disabled } = this.state;
     return (
       <TouchableHighlight
         underlayColor="#dddddd"
@@ -59,8 +58,8 @@ class SettingsScreen extends Component {
         ))}
           {data.item.type === 'toggle' &&
           <Switch
-            disabled={this.trueWednesday}
-            onValueChange={toggleGodmode}
+            disabled={disabled}
+            onValueChange={this.toggleGodmodeSwitch}
             value={godmode}
           />
         }
@@ -69,12 +68,16 @@ class SettingsScreen extends Component {
   };
 
   render() {
+    const { isLoading, godmode } = this.props;
     return (
-      <FlatList
-        data={this.state.listViewData}
-        renderItem={this._renderItem}
-        extraData={this.state.godmode}
-      />
+      (!isLoading)
+        ?
+          <FlatList
+            data={this.listViewData}
+            renderItem={this._renderItem}
+            extraData={godmode}
+          />
+        : <ActivityIndicator size="large" color="#0000ff" />
     );
   }
 }

@@ -79,7 +79,6 @@ export default class GlobalProvider extends Component {
   };
 
   fetchFroggos = async () => {
-    this.setState({ isLoading: true });
     const { todaysDudes } = this.state;
     try {
       if (!this.state.dudesRepository) await this.cacheFroggos();
@@ -131,15 +130,18 @@ export default class GlobalProvider extends Component {
   }
 
   toggleGodmode = async () => {
-    if (!this.trueWednesday) {
-      console.log('toggling godmode');
-      const godmode = !this.state.godmode;
-      this.setState({ godmode, isLoading: true });
-      if (godmode && (this.state.lastFetched !== this.curDate)) {
+    this.setState({
+      isLoading: true,
+      godmode: !this.state.godmode,
+    }, async () => {
+      if (this.state.godmode && (this.state.lastFetched !== this.curDate)) {
         await this.fetchFroggos();
       }
-      this.setState({ isLoading: false, isWednesday: !this.state.isWednesday });
-    }
+      this.setState({
+        isLoading: false,
+        isWednesday: !this.state.isWednesday,
+      });
+    });
   };
 
   unlockAchievement = async (achievementId) => {
