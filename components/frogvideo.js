@@ -1,5 +1,6 @@
 import React from 'react';
 import Video from 'react-native-video';
+
 import styles from '../styles';
 
 const FrogVideo = () => (
@@ -11,6 +12,7 @@ const FrogVideo = () => (
     resizeMode="cover"
     // repeat
     style={styles.dudeVid}
-  />);
+  />
+);
 
 export default FrogVideo;

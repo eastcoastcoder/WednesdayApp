@@ -63,15 +63,6 @@ export default class GlobalProvider extends Component {
     await this.initialize();
   }
 
-  incrementHitCount = async () => {
-    const { hitCount } = this.state;
-    this.setState({ hitCount: hitCount + 1 });
-  }
-
-  resetHitCount = async () => {
-    this.setState({ hitCount: 0 });
-  }
-
   clearDudesData = async () => {
     const allKeys = await AsyncStorage.getAllKeys();
     await AsyncStorage.multiRemove(allKeys);
@@ -168,8 +159,6 @@ export default class GlobalProvider extends Component {
         toggleGodmode: this.toggleGodmode,
         clearDudesData: this.clearDudesData,
         unlockAchievement: this.unlockAchievement,
-        incrementHitCount: this.incrementHitCount,
-        resetHitCount: this.resetHitCount,
       }}
       >
         {this.props.children}
