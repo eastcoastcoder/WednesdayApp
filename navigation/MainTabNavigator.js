@@ -6,31 +6,40 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 import Dude from '../screens/Dude';
 import Collection from '../screens/Collection';
-import Egg from './EggNavigator';
+import Experiments from '../screens/Experiments';
 import Settings from '../screens/Settings';
 import Achievements from '../screens/Achievements';
+import Egg from './EggNavigator';
 
-export default TabNavigator(
-  {
-    Dude: {
-      screen: Dude,
-      navigationOptions: {
-        title: 'Dude',
-      },
-    },
-    Collection: {
-      screen: Collection,
-    },
-    Egg: {
-      screen: Egg,
-    },
-    Achievements: {
-      screen: Achievements,
-    },
-    Settings: {
-      screen: Settings,
+const routes = {
+  Dude: {
+    screen: Dude,
+    navigationOptions: {
+      title: 'Dude',
     },
   },
+  Collection: {
+    screen: Collection,
+  },
+  Egg: {
+    screen: Egg,
+  },
+  Achievements: {
+    screen: Achievements,
+  },
+  Settings: {
+    screen: Settings,
+  }
+};
+
+if (__DEV__) {
+  routes.Experiments = {
+    screen: Experiments,
+  };
+}
+
+export default TabNavigator(
+  routes,
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
@@ -59,6 +68,10 @@ export default TabNavigator(
                   : 'md-star';
             break;
           case 'Settings':
+            iconName =
+              Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options';
+            break;
+          case 'Experiments':
             iconName =
               Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options';
             break;

@@ -7,12 +7,13 @@
   "dependencies": {
     "hoist-non-react-statics": "^3.0.0-rc.1",
     "howler": "^2.0.9",
-    "react": "16.3.1",
+    "react": "16.4.2",
     "react-native": "0.55",
     "react-native-dotenv": "^0.1.1",
     "react-native-lightbox": "^0.7.0",
     "react-native-sound": "^0.10.9",
     "react-native-super-grid": "^2.1.0",
+    "react-native-push-notification": "^3.0.2",
     "react-native-vector-icons": "^4.6.0",
     "react-native-video": "^3.0.0",
     "react-navigation": "^1.0.0-beta.27"
