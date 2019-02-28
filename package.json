@@ -7,19 +7,22 @@
   "dependencies": {
     "hoist-non-react-statics": "^3.0.0-rc.1",
     "howler": "^2.0.9",
-    "react": "16.4.2",
-    "react-native": "0.55",
-    "react-native-dotenv": "^0.1.1",
+    "react": "^16.8.3",
+    "react-native": "^0.59.0-rc.3",
+    "react-native-dotenv": "^0.2.0",
     "react-native-lightbox": "^0.7.0",
+    "react-native-push-notification": "^3.0.2",
     "react-native-sound": "^0.10.9",
     "react-native-super-grid": "^2.1.0",
-    "react-native-push-notification": "^3.0.2",
     "react-native-vector-icons": "^4.6.0",
     "react-native-video": "^3.0.0",
     "react-navigation": "^1.0.0-beta.27"
   },
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
     "babel-eslint": "^8.2.3",
+    "babel-jest": "^24.1.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-compat": "^2.2.0",
@@ -27,6 +30,9 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-react": "^7.7.0",
-    "eslint-plugin-react-native": "^3.2.1"
+    "eslint-plugin-react-native": "^3.2.1",
+    "jest": "^24.1.0",
+    "metro-react-native-babel-preset": "^0.52.0",
+    "react-test-renderer": "16.8.3"
   }
 }

@@ -1,0 +1,7 @@
+const APPID = '1541904059175362';
+const APPSECRET = 'c3482dd931595b8f8ed9f8f53fd316d1';
+
+export {
+  APPID,
+  APPSECRET,
+};

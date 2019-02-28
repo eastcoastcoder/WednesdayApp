@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import styles from '../styles';
-import FrogVideo from './FrogVideo';
+import FrogVideo from './frogvideo';
 
 const FrogImage = ({ hitCount, currentDudeUri, handleImagePress }) => (
   <TouchableOpacity

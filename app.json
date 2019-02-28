@@ -1,8 +1,8 @@
 {
-    "name": "wednesday",
-    "displayName": "wednesday",
+    "name": "wednesdayapp",
+    "displayName": "WednesdayApp",
     "description": "A very interesting project.",
-    "slug": "wednesday",
+    "slug": "wednesdayapp",
     "privacy": "public",
     "icon": "./assets/icons/app.png",
     "version": "1.0.0",

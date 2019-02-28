@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import FrogImage from '../components/FrogImage';
-import FrogText from '../components/FrogText';
+import FrogImage from '../components/frogimage';
+import FrogText from '../components/frogtext';
 import styles from '../styles';
 import contextWrap from '../util/contextWrap';
 

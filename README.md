@@ -1,3 +1,5 @@
+#  Notice: This app is currently broken per FB's Page Public Content Access Policy
+
 #  WednesdayApp
 This is a basic app written in React Native which fetches frog images from Facebook's Graph API from a popular meme page.
 

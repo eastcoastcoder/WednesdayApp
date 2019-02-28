@@ -3,9 +3,13 @@ import {
   AsyncStorage,
 } from 'react-native';
 import Sound from 'react-native-sound';
-import { APPID, APPSECRET } from 'react-native-dotenv';
+import { APPID, APPSECRET } from '../dotenv';
 import { fetchJSON } from '../util/fetchJSON';
 import { GlobalContext } from './GlobalContext';
+
+const token = `${APPID}|${APPSECRET}`;
+const trueWednesday = (new Date().getDay() === 3);
+const curDate = (new Date()).toLocaleDateString();
 
 export default class GlobalProvider extends Component {
   constructor(props) {
@@ -13,9 +17,6 @@ export default class GlobalProvider extends Component {
 
     Sound.setCategory('Playback', true);
     this.state = this.initialState;
-    this.token = `${APPID}|${APPSECRET}`;
-    this.trueWednesday = (new Date().getDay() === 3);
-    this.curDate = (new Date()).toLocaleDateString();
   }
 
   get initialState() {
@@ -46,13 +47,14 @@ export default class GlobalProvider extends Component {
     for (const store of stores) {
       storageObj[store[0]] = JSON.parse(store[1]);
     }
-    const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${this.token}`;
+    const notWedUrl = `https://graph.facebook.com/v3.0/1726444857365752/photos?fields=images&access_token=${token}`;
     const { lastFetched } = storageObj;
-    if (this.state.isWednesday && (lastFetched !== this.curDate)) {
+    if (this.state.isWednesday && (lastFetched !== curDate)) {
       await this.fetchFroggos();
     }
+    const notWednesdayDude = (await fetchJSON(notWedUrl)).data[0].images[0];
     return this.setState({
-      notWednesdayDude: (await fetchJSON(notWedUrl)).data[0].images[0],
+      notWednesdayDude,
       isLoading: false,
       ...storageObj,
     });
@@ -109,10 +111,17 @@ export default class GlobalProvider extends Component {
   }
 
   cacheFroggos = async () => {
-    let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${this.token}`;
+    let url = `https://graph.facebook.com/v3.0/202537220084441/photos?fields=images,id&limit=100&access_token=${token}`;
     let dudesRepository = [];
     while (url) {
-      const response = await fetchJSON(url);
+      let response = {};
+      try {
+        response = await fetchJSON(url);
+        if (response.error) throw response.error;
+      } catch (err) {
+        // THROWS Public Page Content Access Error
+        console.log(err);
+      }
       dudesRepository = dudesRepository.concat(response.data);
       url = response.paging.next;
     }
@@ -125,7 +134,7 @@ export default class GlobalProvider extends Component {
       isLoading: true,
       godmode: !this.state.godmode,
     }, async () => {
-      if (this.state.godmode && (this.state.lastFetched !== this.curDate)) {
+      if (this.state.godmode && (this.state.lastFetched !== curDate)) {
         await this.fetchFroggos();
       }
       this.setState({
@@ -153,6 +162,7 @@ export default class GlobalProvider extends Component {
   };
 
   render() {
+    const { isLoading } = this.state;
     return (
       <GlobalContext.Provider value={{
         ...this.state,
@@ -161,7 +171,7 @@ export default class GlobalProvider extends Component {
         unlockAchievement: this.unlockAchievement,
       }}
       >
-        {this.props.children}
+        {!isLoading && this.props.children}
       </GlobalContext.Provider>
     );
   }
